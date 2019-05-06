@@ -10,7 +10,8 @@ import base64
 TOPIC_CONSUME =  ('TOPIC_CONSUME' in os.environ and os.environ['TOPIC_CONSUME']) or "population-objects"
 TOPIC_PRODUCE =  ('TOPIC_CONSUME' in os.environ and os.environ['TOPIC_CONSUME']) or "evolved-population-objects"
 
-r = redis.StrictRedis(host='localhost', port=6379, db=0)
+r = redis.StrictRedis(host='redis', port=6379, db=0)
+
 producer = r.pubsub()
 consumer = r.pubsub()
 consumer.subscribe(TOPIC_CONSUME)
