@@ -1,4 +1,5 @@
 version: '3'
+
 services:
   redis:
     image: "redis:alpine"
@@ -16,4 +17,17 @@ services:
     # command:  tail -F anything
     command: python main.py
     environment:
-      - MESSAGE_TYPE=QUEUE
+      MESSAGE_TYPE : QUEUE
+  
+  controller:
+    build: './controller'
+    depends_on:
+      - redis
+      - ga-worker
+    volumes:
+      - ./controller:/code
+    command: python experiment.py
+    environment:
+      MESSAGE_TYPE: QUEUE
+
+

@@ -26,17 +26,24 @@ while True:
     
     elif MESSAGE_TYPE ==  'QUEUE':
         message =  r.blpop(TOPIC_CONSUME)
-        data = str(message)
+        data = message[1]
+    
+    
+    
     if data:
         print(data)
-        r.publish(TOPIC_PRODUCE, data)
-       # data_args = base64.b64decode(message['data'])
-       # args = json.loads(data_args)
-       # worker = GA_Worker(args)
-       # worker.setup()
-       # result = worker.run()
+        
+        #data_args = base64.b64decode(data)
+        args = json.loads(data)
+        worker = GA_Worker(args)
+        worker.setup()
+        result = worker.run()
        # Return with a format for writing to MessageHub
-       # data = json.dumps(result).encode('utf-8')
+        data = json.dumps(result).encode('utf-8')
+
+        r.publish(TOPIC_PRODUCE, data)
+        r.lpush(TOPIC_CONSUME, data)
+
     else:
         #print("no message")
         time.sleep(1)
