@@ -19,13 +19,13 @@ services:
     environment:
       MESSAGE_TYPE : QUEUE
   
-  controller:
-    build: './controller'
+  setup:
+    build: './setup'
     depends_on:
       - redis
       - ga-worker
     volumes:
-      - ./controller:/code
+      - ./setup:/code
     command: python experiment.py
     environment:
       MESSAGE_TYPE: QUEUE
