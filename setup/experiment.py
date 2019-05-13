@@ -13,6 +13,7 @@ logger.setLevel(logging.INFO)
 TOPIC_NAME =  ('TOPIC_PRODUCE' in os.environ and os.environ['TOPIC_PRODUCE']) or "population-objects"
 MESSAGE_TYPE = ('MESSAGE_TYPE' in os.environ and os.environ['MESSAGE_TYPE']) or 'PUBSUB'
 
+print(os.environ['MESSAGE_TYPE'])
 
 r = redis.StrictRedis(host='redis', port=6379, db=0)
 

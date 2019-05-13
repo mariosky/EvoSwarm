@@ -12,7 +12,7 @@ TOPIC_PRODUCE =  ('TOPIC_PRODUCE' in os.environ and os.environ['TOPIC_PRODUCE'])
 MESSAGE_TYPE = ('MESSAGE_TYPE' in os.environ and os.environ['MESSAGE_TYPE']) or 'PUBSUB'
 
 r = redis.StrictRedis(host='redis', port=6379, db=0)
-
+print(os.environ['MESSAGE_TYPE'])
 consumer = r.pubsub()
 consumer.subscribe(TOPIC_CONSUME)
 
@@ -31,7 +31,7 @@ while True:
     
     
     if data:
-        print(data)
+        #print(data)
         
         #data_args = base64.b64decode(data)
         args = json.loads(data)
