@@ -32,11 +32,8 @@ while True:
         message =  r.blpop(TOPIC_CONSUME)
         # message is a tuple (queue_name, data)
         data = message[1] 
-        
         print("message:from::", TOPIC_CONSUME)
-        print("message:type:", type(data))
-    
-    
+        #print("message:type:", type(data))
     
     if data:
         #print(data)
@@ -49,7 +46,7 @@ while True:
         result = worker.run()
        # Return with a format for writing to MessageHub
         data = json.dumps(result).encode('utf-8')
-        print("Producing Message")
+        print("New POPULATION Message")
         r.publish(TOPIC_PRODUCE, data)
         r.lpush(TOPIC_PRODUCE, data)
 

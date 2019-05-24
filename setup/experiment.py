@@ -29,7 +29,7 @@ conf = {
     2: { 'NGEN':50, 'POP_SIZE': 100, 'MAX_ITERATIONS':20, 'MESSAGES_HUB_PSO':0, 'MESSAGES_HUB_GA':6 },
     3: { 'NGEN':50, 'POP_SIZE': 100, 'MAX_ITERATIONS':30, 'MESSAGES_HUB_PSO':0, 'MESSAGES_HUB_GA':2 },
     5: { 'NGEN':50, 'POP_SIZE': 100, 'MAX_ITERATIONS':25, 'MESSAGES_HUB_PSO':0, 'MESSAGES_HUB_GA':4 },
-    10:{ 'NGEN':50, 'POP_SIZE': 200, 'MAX_ITERATIONS':25, 'MESSAGES_HUB_PSO':0, 'MESSAGES_HUB_GA':4 },
+    10:{ 'NGEN':50, 'POP_SIZE': 200, 'MAX_ITERATIONS':25, 'MESSAGES_HUB_PSO':0, 'MESSAGES_HUB_GA':6 },
     20:{ 'NGEN':50, 'POP_SIZE': 200, 'MAX_ITERATIONS':25, 'MESSAGES_HUB_PSO':0, 'MESSAGES_HUB_GA':8 },
     40:{ 'NGEN':50, 'POP_SIZE': 200, 'MAX_ITERATIONS':25, 'MESSAGES_HUB_PSO':0, 'MESSAGES_HUB_GA':16 },
 
@@ -149,7 +149,7 @@ if __name__ == '__main__':
     #tz = pytz.timezone('UTC')
     #logger.info("Start: {}".format(tz.normalize(start_time.astimezone(tz)).strftime('%Y-%m-%dT%H:%M:%S.%fZ')))
     experiment(conf)
-    time.sleep(500)
+    
 
     #finish_time = datetime.datetime.fromtimestamp(time.time(), pytz.utc)
     #logger.info("Start: {}".format(tz.normalize(finish_time.astimezone(tz)).strftime('%Y-%m-%dT%H:%M:%S.%fZ')))

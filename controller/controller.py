@@ -67,7 +67,12 @@ class DockerExperiment():
             populations[1]['population'] = cxBestFromEach(populations[1]['population'], populations[2]['population'])
             populations[2]['population'] = cxBestFromEach(populations[2]['population'], populations[0]['population'])
 
-        self.messages.on_next(populations[0])
+            # I can´t fo map(...on_next, populations )
+            self.messages.on_next(populations[0])
+            self.messages.on_next(populations[1])
+            self.messages.on_next(populations[2])
+            
+        
     
     def read_from_queue(self):
         print("worker start")
@@ -107,8 +112,8 @@ class DockerExperiment():
 
 
         if MESSAGE_TYPE == 'QUEUE':
-            r.lpush(TOPIC_PRODUCE, message)
-
+            ack = r.lpush(TOPIC_PRODUCE, message)
+            print("Produce:", ack)
 
 DockerExperiment({"problem":{"max_iterations":40}})
 time.sleep(4)
