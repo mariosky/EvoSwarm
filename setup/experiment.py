@@ -10,8 +10,8 @@ import json
 logger = logging.getLogger('google_experiment')
 logger.setLevel(logging.INFO)
 
-TOPIC_NAME =  ('TOPIC_PRODUCE' in os.environ and os.environ['TOPIC_PRODUCE']) or "population-objects"
-MESSAGE_TYPE = ('MESSAGE_TYPE' in os.environ and os.environ['MESSAGE_TYPE']) or 'PUBSUB'
+TOPIC_PRODUCE =  ('TOPIC_PRODUCE' in os.environ and os.environ['TOPIC_PRODUCE']) or "population-objects"
+MESSAGE_TYPE = ('MESSAGE_TYPE' in os.environ and os.environ['MESSAGE_TYPE']) or 'QUEUE'
 
 print(os.environ['MESSAGE_TYPE'])
 
@@ -26,7 +26,7 @@ conf = {
 
 # 40: 4,000,000
 
-    2: { 'NGEN':50, 'POP_SIZE': 100, 'MAX_ITERATIONS':20, 'MESSAGES_HUB_PSO':0, 'MESSAGES_HUB_GA':2 },
+    2: { 'NGEN':50, 'POP_SIZE': 100, 'MAX_ITERATIONS':20, 'MESSAGES_HUB_PSO':0, 'MESSAGES_HUB_GA':6 },
     3: { 'NGEN':50, 'POP_SIZE': 100, 'MAX_ITERATIONS':30, 'MESSAGES_HUB_PSO':0, 'MESSAGES_HUB_GA':2 },
     5: { 'NGEN':50, 'POP_SIZE': 100, 'MAX_ITERATIONS':25, 'MESSAGES_HUB_PSO':0, 'MESSAGES_HUB_GA':4 },
     10:{ 'NGEN':50, 'POP_SIZE': 200, 'MAX_ITERATIONS':25, 'MESSAGES_HUB_PSO':0, 'MESSAGES_HUB_GA':4 },
@@ -39,7 +39,7 @@ conf = {
 
      #For paper:
     'FUNCTIONS' : (3,),
-    'DIMENSIONS' : (2, ),       #(2,3,5,10,20)
+    'DIMENSIONS' : (10, ),       #(2,3,5,10,20)
     'INSTANCES' : (1, )  #list(range(1,6)) + list(range(41, 51))
 
 }
@@ -92,17 +92,23 @@ def experiment(conf):
 
                 #Initialize pops
                 google_messages = new_populations(env, conf[dim]['MESSAGES_HUB_GA'] , conf[dim]['POP_SIZE'],env["problem"]["dim"], env["problem"]["search_space"][0], env["problem"]["search_space"][1])
-                print(google_messages)
+                print("messages created")
+
+                print("Checking redis with ping")
+                while not r.ping():
+                    print("ping",r.ping())
+                    time.sleep(1)
 
                 
                 for data in google_messages:
                     json_data = json.dumps(data)
                     # Data must be a bytestring
                     message = json_data.encode('utf-8')
-
+                    print("message")
                     if MESSAGE_TYPE == 'QUEUE':
-                        r.lpush(TOPIC_NAME, message)
-
+                        print("sending to",TOPIC_PRODUCE )
+                        result = r.lpush(TOPIC_PRODUCE, message)
+                        print("lpush", result)
 
 
                 #Initialize experiment?
@@ -143,6 +149,7 @@ if __name__ == '__main__':
     #tz = pytz.timezone('UTC')
     #logger.info("Start: {}".format(tz.normalize(start_time.astimezone(tz)).strftime('%Y-%m-%dT%H:%M:%S.%fZ')))
     experiment(conf)
+    time.sleep(500)
 
     #finish_time = datetime.datetime.fromtimestamp(time.time(), pytz.utc)
     #logger.info("Start: {}".format(tz.normalize(finish_time.astimezone(tz)).strftime('%Y-%m-%dT%H:%M:%S.%fZ')))

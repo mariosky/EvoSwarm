@@ -9,16 +9,20 @@ import base64
 
 TOPIC_CONSUME =  ('TOPIC_CONSUME' in os.environ and os.environ['TOPIC_CONSUME']) or "population-objects"
 TOPIC_PRODUCE =  ('TOPIC_PRODUCE' in os.environ and os.environ['TOPIC_PRODUCE']) or "evolved-population-objects"
-MESSAGE_TYPE = ('MESSAGE_TYPE' in os.environ and os.environ['MESSAGE_TYPE']) or 'PUBSUB'
+MESSAGE_TYPE = ('MESSAGE_TYPE' in os.environ and os.environ['MESSAGE_TYPE']) or 'QUEUE'
 
 r = redis.StrictRedis(host='redis', port=6379, db=0)
-print(os.environ['MESSAGE_TYPE'])
-consumer = r.pubsub()
-consumer.subscribe(TOPIC_CONSUME)
+
+print("WORKER", os.environ['MESSAGE_TYPE'])
+
+if MESSAGE_TYPE ==  'PUBSUB':
+    consumer = r.pubsub()
+    consumer.subscribe(TOPIC_CONSUME)
 
 # {'type': 'subscribe', 'pattern': None, 'channel': b'population-objects', 'data': 1}
 while True:
     data = None
+    print("worker LOOP")
     if MESSAGE_TYPE ==  'PUBSUB':
         message = consumer.get_message()
         if message and message['type'] == 'message':
@@ -26,7 +30,11 @@ while True:
     
     elif MESSAGE_TYPE ==  'QUEUE':
         message =  r.blpop(TOPIC_CONSUME)
-        data = message[1]
+        # message is a tuple (queue_name, data)
+        data = message[1] 
+        
+        print("message:from::", TOPIC_CONSUME)
+        print("message:type:", type(data))
     
     
     
@@ -35,14 +43,15 @@ while True:
         
         #data_args = base64.b64decode(data)
         args = json.loads(data)
+
         worker = GA_Worker(args)
         worker.setup()
         result = worker.run()
        # Return with a format for writing to MessageHub
         data = json.dumps(result).encode('utf-8')
-
+        print("Producing Message")
         r.publish(TOPIC_PRODUCE, data)
-        r.lpush(TOPIC_CONSUME, data)
+        r.lpush(TOPIC_PRODUCE, data)
 
     else:
         #print("no message")

@@ -17,17 +17,18 @@ services:
     command: python main.py
     environment:
       MESSAGE_TYPE :  ${MESSAGE_TYPE}
+      PYTHONUNBUFFERED: 1 
   
   setup:
     build: './setup'
     depends_on:
       - redis
-      - ga-worker
     volumes:
       - ./setup:/code
     command: python experiment.py
     environment:
       MESSAGE_TYPE: ${MESSAGE_TYPE}
+      PYTHONUNBUFFERED: 1
 
   controller:
     build: './controller'
@@ -38,4 +39,5 @@ services:
     command: python controller.py
     environment:
       MESSAGE_TYPE: ${MESSAGE_TYPE}
+      PYTHONUNBUFFERED: 1
  

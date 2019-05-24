@@ -130,7 +130,7 @@ class GA_Worker:
                      for ind in pop]
 
         self.conf.update({'iterations': evals, 'population': final_pop, 'best_individual': best_ind ,
-                          'fopt': self.function.getfopt()})
+                          'fopt': self.function.getfopt(), 'best_score':best_ind.fitness.values[0]})
 
         if (best_ind.fitness.values[0] <= self.function.getfopt() + 1e-8):
             self.conf['best'] = True
