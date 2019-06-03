@@ -46,6 +46,7 @@ class DockerExperiment():
         self.messages.subscribe(lambda populations : self.produce(populations), on_completed = lambda :"MESSAGES COMPLETED" )
 
         self.read_from_queue()
+        self.counter = 0
 
     def finish(self):
 
@@ -93,13 +94,14 @@ class DockerExperiment():
                     #break
             if data:
                 pop_dict = json.loads(data)
-                log_to_redis_coco(pop_dict)
+                
                 #print("message:data:", pop_dict)
                 #print("message:type:", type(pop_dict))
                 if 'best_score' in pop_dict:
-
                     print (pop_dict['best_score'] )
+
                 print("message read from queue")
+                self.log_to_redis_coco(pop_dict)
                 self.consumed_messages.on_next(pop_dict)
             else:
                 print("no message")
@@ -116,27 +118,29 @@ class DockerExperiment():
             ack = r.lpush(TOPIC_PRODUCE, message)
             print("Produce:", ack)
 
-def log_to_redis_coco(population):
-    #log_name = 'log:test_pop:' + str(population['experiment']["experiment_id"])
-    log_name =  "log:swarm"
-    r.lpush(log_name, json.dumps(get_benchmark_data(population)))
+    def log_to_redis_coco(self, population):
+        #log_name = 'log:test_pop:' + str(population['experiment']["experiment_id"])
+        log_name =  "log:swarm"
+        r.lpush(log_name, json.dumps(self.get_benchmark_data(population)))
 
 
 
 
-def get_benchmark_data(population):
-    return {"evals": population["iterations"],
-            "instance":population["problem"]["instance"],
-            "worker_id":"NA",
-            "params":{"sample_size":population["population_size"],
-                      "init":"random:[-5,5]",
-                      "NGEN":population["algorithm"]["iterations"]
-                      },
-             "experiment_id":population['experiment']["experiment_id"],
-             "algorithm":population["algorithm"]["name"],
-             "dim":population["problem"]["dim"],
-             "benchmark":population["problem"]["function"],
-             "fopt":population["fopt"]}
+    def get_benchmark_data(self, population):
+        return {"evals": population["iterations"],
+                "instance":population["problem"]["instance"],
+                "worker_id":"NA",
+                "params":{"sample_size":population["population_size"],
+                        "init":"random:[-5,5]",
+                        "NGEN":population["algorithm"]["iterations"]
+                        },
+                "experiment_id":population['experiment']["experiment_id"],
+                "algorithm":population["algorithm"]["name"],
+                "dim":population["problem"]["dim"],
+                "benchmark":population["problem"]["function"],
+                "fopt":population["fopt"],
+                "message_counter": self.counter,
+                "best_score": ("best_score" in population and population["best_score"]) or None }
 
 
 DockerExperiment({"problem":{"max_iterations":100}})
