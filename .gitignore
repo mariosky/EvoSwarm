@@ -6,6 +6,9 @@ __pycache__/
 # C extensions
 *.so
 
+# elastic search data
+esdata/
+
 # Distribution / packaging
 .Python
 build/

@@ -93,6 +93,7 @@ class DockerExperiment():
                     #break
             if data:
                 pop_dict = json.loads(data)
+                log_to_redis_coco(pop_dict)
                 #print("message:data:", pop_dict)
                 #print("message:type:", type(pop_dict))
                 if 'best_score' in pop_dict:
@@ -115,5 +116,29 @@ class DockerExperiment():
             ack = r.lpush(TOPIC_PRODUCE, message)
             print("Produce:", ack)
 
-DockerExperiment({"problem":{"max_iterations":40}})
+def log_to_redis_coco(population):
+    #log_name = 'log:test_pop:' + str(population['experiment']["experiment_id"])
+    log_name =  "log:swarm"
+    r.lpush(log_name, json.dumps(get_benchmark_data(population)))
+
+
+
+
+def get_benchmark_data(population):
+    return {"evals": population["iterations"],
+            "instance":population["problem"]["instance"],
+            "worker_id":"NA",
+            "params":{"sample_size":population["population_size"],
+                      "init":"random:[-5,5]",
+                      "NGEN":population["algorithm"]["iterations"]
+                      },
+             "experiment_id":population['experiment']["experiment_id"],
+             "algorithm":population["algorithm"]["name"],
+             "dim":population["problem"]["dim"],
+             "benchmark":population["problem"]["function"],
+             "fopt":population["fopt"]}
+
+
+DockerExperiment({"problem":{"max_iterations":100}})
 time.sleep(4)
+
