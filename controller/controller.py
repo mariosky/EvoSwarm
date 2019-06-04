@@ -30,6 +30,7 @@ def cxBestFromEach(pop1, pop2, key = lambda p: p['fitness']['score']):
 
 class DockerExperiment():
     def __init__(self, env):
+        self.counter = 0
         self.state = "work"
         self.env = env
         self.consumed_messages = Subject()
@@ -46,7 +47,9 @@ class DockerExperiment():
         self.messages.subscribe(lambda populations : self.produce(populations), on_completed = lambda :"MESSAGES COMPLETED" )
 
         self.read_from_queue()
-        self.counter = 0
+        # This code is unreachable
+        # We need to add a constructor and a start
+        
 
     def finish(self):
 
@@ -121,6 +124,7 @@ class DockerExperiment():
     def log_to_redis_coco(self, population):
         #log_name = 'log:test_pop:' + str(population['experiment']["experiment_id"])
         log_name =  "log:swarm"
+        self.counter = self.counter+1
         r.lpush(log_name, json.dumps(self.get_benchmark_data(population)))
 
 

@@ -1,11 +1,10 @@
 import redis
 import os
-#import process_logs
 import logging
 import time
-#import pytz
 import datetime
 import json
+import uuid
 
 logger = logging.getLogger('google_experiment')
 logger.setLevel(logging.INFO)
@@ -44,20 +43,13 @@ conf = {
 
 }
 
-# fh = logging.FileHandler('experiment_data/{}.log'.format( conf['EXPERIMENT_ID']))
-# fh.setLevel(logging.INFO)
-# logger.addHandler(fh)
-
-
-
-
 def new_populations(env, number_of_pops, n_individuals, dim, lb, ub ):
     import random
     message_list = []
     for pop in range(number_of_pops):
         new_env = dict(env)
         new_env["population"] = [{"chromosome": [random.uniform(lb,ub) for _ in range(dim)], "id": None, "fitness": {"DefaultContext": 0.0}} for _ in range(n_individuals)]
-
+        new_env["message_id"] = str (uuid.uuid4())
         message_list.append(new_env)
     return message_list
 
@@ -69,7 +61,6 @@ def experiment(conf):
             logger.info ("DIM:{} ".format( dim))
             for instance in conf['INSTANCES'] :
                 logger.info ("instance:{}".format(instance))
-
 
                 env = {"problem":
                             {"name": "BBOB",
@@ -109,50 +100,15 @@ def experiment(conf):
                         print("sending to",TOPIC_PRODUCE )
                         result = r.lpush(TOPIC_PRODUCE, message)
                         print("lpush", result)
-
-
-                #Initialize experiment?
-
-
-
-
-
-
-                #google_producer.send_messages(google_messages)
-                #kafka_producer.send_messages(kafka_messages,'populations-topic')
-                
                 
                 print(function,dim, instance )
                 print ("First Messages Sent")
                 print ("Begin Message Loop")
-
-                #time.sleep(60)
-
-                #google_controller.experiment(env)
-
-                #Block until this experiment is done, redis queue, time_out
-                #task = r.blpop("experiment_finished", 0)
-
-
-                #print (task, "Done")
-
-
-
-
 
 
 
 if __name__ == '__main__':
     DESTINATION_PATH = r'/Users/mariogarcia-valdez/Desktop/CocoExp/'
     PROJECT_PATH = r'/Users/mariogarcia-valdez/evocloud/'
-    #start_time = datetime.datetime.fromtimestamp(time.time(), pytz.utc)
-    #tz = pytz.timezone('UTC')
-    #logger.info("Start: {}".format(tz.normalize(start_time.astimezone(tz)).strftime('%Y-%m-%dT%H:%M:%S.%fZ')))
+
     experiment(conf)
-    
-
-    #finish_time = datetime.datetime.fromtimestamp(time.time(), pytz.utc)
-    #logger.info("Start: {}".format(tz.normalize(finish_time.astimezone(tz)).strftime('%Y-%m-%dT%H:%M:%S.%fZ')))
-
-    #data_folder = process_logs.process_logs(conf['EXPERIMENT_ID'])
-    #print ("python -m cocopp -o "+ DESTINATION_PATH + str(conf['EXPERIMENT_ID'])+ " " + PROJECT_PATH + data_folder[2:])

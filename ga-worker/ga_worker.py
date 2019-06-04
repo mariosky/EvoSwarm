@@ -120,7 +120,7 @@ class GA_Worker:
 
             # Gather all the fitnesses in one list and print the stats
             fits = [ind.fitness.values[0] for ind in pop]
-            evals.append((g, min(fits),tools.selBest(pop, 1)[0], num_fe ))
+            evals.append({"gen_num":g,"best_fitness":min(fits),"best_solution":tools.selBest(pop, 1)[0], "num_of_evals":num_fe })
 
 
         best_ind = tools.selBest(pop, 1)[0]
