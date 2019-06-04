@@ -9,7 +9,8 @@ import time
 
 TOPIC_CONSUME =  ('TOPIC_CONSUME' in os.environ and os.environ['TOPIC_CONSUME']) or "evolved-population-objects"
 TOPIC_PRODUCE =  ('TOPIC_PRODUCE' in os.environ and os.environ['TOPIC_PRODUCE']) or "population-objects"
-MESSAGE_TYPE = ('MESSAGE_TYPE' in os.environ and os.environ['MESSAGE_TYPE']) or 'QUEUE'
+
+WORKER_HEARTBEAT_INTERVAL = 10
 
 r = redis.StrictRedis(host='redis', port=6379, db=0)
 consumer = r.pubsub()
@@ -82,18 +83,12 @@ class DockerExperiment():
         print("worker start")
         while self.state == 'work':
             data = None
-            if MESSAGE_TYPE ==  'PUBSUB':
-                message = consumer.get_message()
-                if message and message['type'] == 'message':
-                    data = message['data']
-    
-            elif MESSAGE_TYPE ==  'QUEUE':
-                message =  r.blpop(TOPIC_CONSUME, 2)
-                if message:
-                    data = message[1]
-                    
-                else:
-                    print("NO DATA, WAITING...")
+            message =  r.blpop(TOPIC_CONSUME, 2)
+            if message:
+                data = message[1]
+                 
+            else:
+                print("NO DATA, WAITING...")
                     #break
             if data:
                 pop_dict = json.loads(data)
@@ -115,11 +110,8 @@ class DockerExperiment():
         json_data = json.dumps(population)
         # Data must be a bytestring
         message = json_data.encode('utf-8')
-
-
-        if MESSAGE_TYPE == 'QUEUE':
-            ack = r.lpush(TOPIC_PRODUCE, message)
-            print("Produce:", ack)
+        ack = r.lpush(TOPIC_PRODUCE, message)
+        print("Produce:", ack)
 
     def log_to_redis_coco(self, population):
         #log_name = 'log:test_pop:' + str(population['experiment']["experiment_id"])
@@ -147,6 +139,54 @@ class DockerExperiment():
                 "best_score": ("best_score" in population and population["best_score"]) or None }
 
 
-DockerExperiment({"problem":{"max_iterations":100}})
-time.sleep(4)
+def pull_experiment(time_out=WORKER_HEARTBEAT_INTERVAL):
+        #Pop task from queue
+        #This is a blocking operation
+        #task is a tuple (queue_name, task_id)
+        task = r.blpop("experiment_queue", time_out)
+        if task:
+            print("Task:", task)
+            #Get Task Details
+            #_task = r.get(task[1])
+            #Get Time_stamp
+            #time_stamp =r.time()[0]
+            #Store task in pending_set ordered by time
+            # zadd NOTE: The order of arguments differs from that of the official ZADD command.
+            #r.zadd(self.cola.pending_set,  '%s:%s' % (self.id, task[1]), time_stamp)
+            # Return a Task object
+            #return Task(**eval(_task))
+        #If there is no task to do return None
+            time.sleep(4)
+        else:
+            return None
+
+
+
+# def send_heartbeat(self, timeout = WORKER_HEARTBEAT_INTERVAL + 12):
+#     pipe = r.pipeline()
+#     pipe.set(self.id, 1)
+#     pipe.expire(self.id, timeout)
+#     pipe.execute()
+
+
+if __name__ == "__main__":
+    while True:
+        t = pull_experiment()
+        if (t):
+                print (t)
+                #code = t.params['code']
+                #test = t.params['test']
+                #worker.send_heartbeat() #About to start working
+                #t.result = tester.run_test(code,test)
+                #print (t.result)
+                #t.put_result(worker)
+        else:
+            pass
+
+
+
+
+#DockerExperiment({"problem":{"max_iterations":100}})
+#time.sleep(4)
+
 

@@ -59,10 +59,17 @@ class GA_Worker:
 
 
         #random.seed(i)
-        CXPB = self.conf['algorithm']['crossover']['CXPB']
+        
         if 'CXPB_RND' in self.conf['algorithm']['crossover']:
-            CXPB  = random.uniform(self.conf['algorithm']['crossover']['CXPB_RND'][0],self.conf['algorithm']['crossover']['CXPB_RND'][0])
-        MUTPB = self.conf['algorithm']['mutation']['MUTPB']
+            CXPB  = random.uniform(self.conf['algorithm']['crossover']['CXPB_RND'][0],self.conf['algorithm']['crossover']['CXPB_RND'][1])
+        else:
+            CXPB = self.conf['algorithm']['crossover']['CXPB']
+
+        if 'MUTPB_RND' in self.conf['algorithm']['mutation']:
+            MUTPB  = random.uniform(self.conf['algorithm']['mutation']['MUTPB_RND'][0],self.conf['algorithm']['mutation']['MUTPB_RND'][1])
+        else:
+            MUTPB = self.conf['algorithm']['mutation']['MUTPB']
+        
         NGEN = self.conf['algorithm']['iterations']
         pop = self.get()
 

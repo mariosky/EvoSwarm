@@ -1,0 +1,30 @@
+
+
+
+
+{"problem":
+    {"name": "BBOB",
+      "instance": 2,
+      "error": "1e-8",
+      "function": 3,
+      "dim": 10,
+      "search_space": [-5, 5],
+      "problem_id": "13412341234-3-1-10",
+      "max_iterations": 50},
+"population_size": 1000,
+"population":[],
+"id": "1",
+
+"algorithm": {
+       "name": "GA",
+       "crossover": {"type": "cxTwoPoint", "CXPB_RND": [0.2, 0.6], "CXPB": 0.2}, 
+       "mutation": {"MUTPB": 0.5, "MUTPB_RND": [0.2, 0.7] ,"indpb": 0.05, "sigma": 0.5, "type": "mutGaussian", "mu": 0},
+       "selection": {"type": "tools.selTournament", "tournsize": 2},
+       "iterations": 20},
+
+"experiment":
+    {
+    "owner": "mariosky", 
+    "type": "benchmark", 
+    "experiment_id":11111233}
+}
