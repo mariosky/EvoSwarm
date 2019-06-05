@@ -1,30 +1,19 @@
 
-
-
-
-{"problem":
-    {"name": "BBOB",
-      "instance": 2,
-      "error": "1e-8",
-      "function": 3,
-      "dim": 10,
-      "search_space": [-5, 5],
-      "problem_id": "13412341234-3-1-10",
-      "max_iterations": 50},
-"population_size": 1000,
-"population":[],
-"id": "1",
-
-"algorithm": {
-       "name": "GA",
-       "crossover": {"type": "cxTwoPoint", "CXPB_RND": [0.2, 0.6], "CXPB": 0.2}, 
-       "mutation": {"MUTPB": 0.5, "MUTPB_RND": [0.2, 0.7] ,"indpb": 0.05, "sigma": 0.5, "type": "mutGaussian", "mu": 0},
-       "selection": {"type": "tools.selTournament", "tournsize": 2},
-       "iterations": 20},
-
-"experiment":
+{
+"DIM_CONFIGURATION" : 
     {
-    "owner": "mariosky", 
-    "type": "benchmark", 
-    "experiment_id":11111233}
+        "2" : { "NGEN":50, "POP_SIZE": 100, "MAX_ITERATIONS":20, "MESSAGES_PSO":0, "MESSAGES_GA":6 },
+        "3" : { "NGEN":50, "POP_SIZE": 100, "MAX_ITERATIONS":30, "MESSAGES_PSO":0, "MESSAGES_GA":2 },
+        "5": { "NGEN":50, "POP_SIZE": 100, "MAX_ITERATIONS":25, "MESSAGES_PSO":0, "MESSAGES_GA":4 },
+        "10":{ "NGEN":50, "POP_SIZE": 200, "MAX_ITERATIONS":25, "MESSAGES_PSO":0, "MESSAGES_GA":8 },
+        "20":{ "NGEN":50, "POP_SIZE": 200, "MAX_ITERATIONS":25, "MESSAGES_PSO":0, "MESSAGES_GA":8 },
+        "40":{ "NGEN":50, "POP_SIZE": 200, "MAX_ITERATIONS":25, "MESSAGES_PSO":0, "MESSAGES_GA":16 }
+    },
+    "EXPERIMENT_ID" : "1234",
+
+    "FUNCTIONS": [3],
+    "DIMENSIONS" : [10],
+    "INSTANCES" : [1],  
+    "CXPB_RND": [0.2, 0.6],
+    "MUTPB_RND": [0.1, 0.3]
 }

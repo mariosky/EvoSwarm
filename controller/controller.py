@@ -84,13 +84,12 @@ class DockerExperiment():
         while self.state == 'work':
             data = None
             message =  r.blpop(TOPIC_CONSUME, 2)
-            if message:
-                data = message[1]
-                 
-            else:
+            if not message:
                 print("NO DATA, WAITING...")
-                    #break
-            if data:
+                time.sleep(2)                 
+            else:
+                data = message[1]
+                
                 pop_dict = json.loads(data)
                 
                 #print("message:data:", pop_dict)
@@ -101,9 +100,7 @@ class DockerExperiment():
                 print("message read from queue")
                 self.log_to_redis_coco(pop_dict)
                 self.consumed_messages.on_next(pop_dict)
-            else:
-                print("no message")
-                time.sleep(1)
+                
 
     def produce(self, population):
         print("pop sent:", "population")
