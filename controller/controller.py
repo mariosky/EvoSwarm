@@ -34,10 +34,12 @@ class DockerExperiment():
         self.counter = 0
         self.state = "work"
         self.env = env
+        self.problem_id = env["problem"]["problem_id"]
         self.consumed_messages = Subject()
         self.messages = Subject()
         self.population_objects_topic = "population-objects"
         self.consumed_messages\
+            .filter(lambda x: x["problem"]["problem_id"] == self.problem_id) \
             .take(env["problem"]["max_iterations"])\
             .buffer_with_count(3)\
             .subscribe( on_next=lambda x : self.population_mixer(x),on_completed = self.finish)
@@ -58,7 +60,7 @@ class DockerExperiment():
         self.status = "stop"
         self.messages.on_completed()
         self.messages.dispose()
-        sys.exit(0)
+        #sys.exit(0)
 
 
 
@@ -100,7 +102,8 @@ class DockerExperiment():
                 print("message read from queue")
                 self.log_to_redis_coco(pop_dict)
                 self.consumed_messages.on_next(pop_dict)
-                
+
+               
 
     def produce(self, population):
         print("pop sent:", "population")
@@ -140,43 +143,24 @@ def pull_experiment(time_out=WORKER_HEARTBEAT_INTERVAL):
         #Pop task from queue
         #This is a blocking operation
         #task is a tuple (queue_name, task_id)
-        task = r.blpop("experiment_queue", time_out)
-        if task:
-            print("Task:", task)
-            #Get Task Details
-            #_task = r.get(task[1])
-            #Get Time_stamp
-            #time_stamp =r.time()[0]
-            #Store task in pending_set ordered by time
-            # zadd NOTE: The order of arguments differs from that of the official ZADD command.
-            #r.zadd(self.cola.pending_set,  '%s:%s' % (self.id, task[1]), time_stamp)
-            # Return a Task object
-            #return Task(**eval(_task))
-        #If there is no task to do return None
-            time.sleep(4)
+        message = r.blpop("experiment_queue", time_out)
+        if message:
+            config_json = message[1]
+            config = json.loads(config_json)
+
+            return config
+    
         else:
-            return None
-
-
-
-# def send_heartbeat(self, timeout = WORKER_HEARTBEAT_INTERVAL + 12):
-#     pipe = r.pipeline()
-#     pipe.set(self.id, 1)
-#     pipe.expire(self.id, timeout)
-#     pipe.execute()
+            return ""
 
 
 if __name__ == "__main__":
     while True:
         t = pull_experiment()
         if (t):
-                print (t)
-                #code = t.params['code']
-                #test = t.params['test']
-                #worker.send_heartbeat() #About to start working
-                #t.result = tester.run_test(code,test)
-                #print (t.result)
-                #t.put_result(worker)
+                print("DockerExp env", t)
+                DockerExperiment(t})
+
         else:
             pass
 

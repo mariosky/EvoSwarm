@@ -125,33 +125,24 @@ def pull_conf(time_out=WORKER_HEARTBEAT_INTERVAL):
         #Pop task from queue
         #This is a blocking operation
         #task is a tuple (queue_name, task_id)
-        task = r.blpop("experiment_queue", time_out)
-        if task:
-            print("Task:", task)
-            #Get Task Details
-            #_task = r.get(task[1])
-            #Get Time_stamp
-            #time_stamp =r.time()[0]
-            #Store task in pending_set ordered by time
-            # zadd NOTE: The order of arguments differs from that of the official ZADD command.
-            #r.zadd(self.cola.pending_set,  '%s:%s' % (self.id, task[1]), time_stamp)
-            # Return a Task object
-            #return Task(**eval(_task))
-        #If there is no task to do return None
-            
-            return task
+        message = r.blpop("setup_queue", time_out)
+        if message:
+            config_json = message[1]
+            config = json.loads(config_json)
+
+            return config
+
+
         else:
-            return ()
+            return ""
 
 
 if __name__ == '__main__':
     while True:
-        config_message = pull_conf()
-        print(config_message)
+        config = pull_conf()
 
-        if (config_message):
-            config_json = config_message[1]
-            config = json.loads(config_json)
+        if (config):
+
             experiment(config)
         else:
             pass
