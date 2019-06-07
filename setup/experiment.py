@@ -107,12 +107,14 @@ def experiment(conf):
 
                 
                 print(function,dim, instance )
-                print ("First Messages Sent")
+                print ("populations sent to workers")
                 
-                print("Sending message to controller")
+                print("sending problem to controller")
                 
                 r.rpush("experiment_queue",json.dumps(env))
                 #Block Until Finsihed
+                print("waiting for problem to finish")
+                
                 experiment_finished = r.blpop("experiment_finished", 0)
                 print (experiment_finished, "Done")
 

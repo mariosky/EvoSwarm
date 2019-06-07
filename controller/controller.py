@@ -15,7 +15,6 @@ WORKER_HEARTBEAT_INTERVAL = 10
 r = redis.StrictRedis(host='redis', port=6379, db=0)
 
 redis_ready = False 
-
 while not redis_ready:
     try:
         redis_ready = r.ping()
@@ -29,16 +28,6 @@ consumer = r.pubsub()
 consumer.subscribe(TOPIC_CONSUME)
 
 
-def cxBestFromEach(pop1, pop2, key = lambda p: p['fitness']['score']):
-    # small is better
-    pop1.sort(key=key)
-    pop2.sort(key=key)
-    size = min(len(pop1), len(pop2))
-
-    cxpoint = (size - 1) // 2
-
-    pop1[cxpoint:] = pop2[:cxpoint+2]
-    return pop1
 
 
 class DockerExperiment():
@@ -56,20 +45,26 @@ class DockerExperiment():
             .buffer_with_count(3)\
             .subscribe( on_next=lambda x : self.population_mixer(x),on_completed = self.finish)
 
-        self.consumed_messages.subscribe(lambda x : print('CONSUMED:{}'.format('x')),on_completed = lambda :"MESSAGES COMPLETED"  )
+        self.consumed_messages.subscribe(lambda : self.one_more(), on_completed = lambda : "MESSAGES COMPLETED"  )
         self.messages.publish()
 
         self.messages.subscribe(lambda populations : self.produce(populations), on_completed = lambda :"MESSAGES COMPLETED" )
 
-        self.read_from_queue()
+        #self.read_from_queue()
         # This code is unreachable
         # We need to add a constructor and a start
+
+    def one_more(self):
+        print('CONSUMED:{}'.format(self.counter))
+        self.counter+=1
+
+
         
 
     def finish(self):
 
         print("Consume Finished")
-        self.status = "stop"
+        self.state = "stop"
         self.messages.on_completed()
         self.messages.dispose()
         #sys.exit(0)
@@ -81,7 +76,7 @@ class DockerExperiment():
     def population_mixer(self, populations):
         if len(populations) == 3:
             print("MIXER:",len(populations))
-            #populations = [json.loads(message.data) for message in populations]
+            #populations = [json.loads(message.data) for message in populations]contr
             populations[0]['population'] = cxBestFromEach(populations[0]['population'],populations[1]['population'])
             populations[1]['population'] = cxBestFromEach(populations[1]['population'], populations[2]['population'])
             populations[2]['population'] = cxBestFromEach(populations[2]['population'], populations[0]['population'])
@@ -151,6 +146,18 @@ class DockerExperiment():
                 "best_score": ("best_score" in population and population["best_score"]) or None }
 
 
+def cxBestFromEach(pop1, pop2, key = lambda p: p['fitness']['score']):
+    # small is better
+    pop1.sort(key=key)
+    pop2.sort(key=key)
+    size = min(len(pop1), len(pop2))
+
+    cxpoint = (size - 1) // 2
+
+    pop1[cxpoint:] = pop2[:cxpoint+2]
+    return pop1
+
+
 def pull_experiment(time_out=WORKER_HEARTBEAT_INTERVAL):
         #Pop task from queue
         #This is a blocking operation
@@ -171,9 +178,9 @@ if __name__ == "__main__":
         t = pull_experiment()
         if (t):
             print("DockerExp env", t)
-            DockerExperiment(t)
+            DockerExperiment(t).read_from_queue()
         else:
-            pass
+            print("waiting for experiment")
 
 
 
