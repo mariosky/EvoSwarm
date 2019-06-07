@@ -13,6 +13,18 @@ TOPIC_PRODUCE =  ('TOPIC_PRODUCE' in os.environ and os.environ['TOPIC_PRODUCE'])
 WORKER_HEARTBEAT_INTERVAL = 10
 
 r = redis.StrictRedis(host='redis', port=6379, db=0)
+
+redis_ready = False 
+
+while not redis_ready:
+    try:
+        redis_ready = r.ping()
+    except:
+        print("waiting for redis")
+        time.sleep(3)
+    
+print("redis alive")
+
 consumer = r.pubsub()
 consumer.subscribe(TOPIC_CONSUME)
 
@@ -158,9 +170,8 @@ if __name__ == "__main__":
     while True:
         t = pull_experiment()
         if (t):
-                print("DockerExp env", t)
-                DockerExperiment(t})
-
+            print("DockerExp env", t)
+            DockerExperiment(t)
         else:
             pass
 
