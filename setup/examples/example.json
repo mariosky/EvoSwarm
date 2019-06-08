@@ -11,9 +11,9 @@
     },
     "EXPERIMENT_ID" : "1234",
 
-    "FUNCTIONS": [3],
+    "FUNCTIONS": [3,4],
     "DIMENSIONS" : [10],
-    "INSTANCES" : [1],  
+    "INSTANCES" : [1,2,3],  
     "CXPB_RND": [0.2, 0.6],
     "MUTPB_RND": [0.1, 0.3]
 }

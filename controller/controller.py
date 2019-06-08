@@ -93,6 +93,7 @@ class DockerExperiment():
     def read_from_queue(self):
         print("worker start")
         while self.state == 'work':
+            print('working')
             data = None
             message =  r.blpop(TOPIC_CONSUME, 2)
             if not message:
@@ -111,6 +112,8 @@ class DockerExperiment():
                 print("message read from queue")
                 self.log_to_redis_coco(pop_dict)
                 self.consumed_messages.on_next(pop_dict)
+        
+        return self.problem_id
 
                
 
@@ -176,10 +179,13 @@ def pull_experiment(time_out=WORKER_HEARTBEAT_INTERVAL):
 
 if __name__ == "__main__":
     while True:
+        print("pulling")
         t = pull_experiment()
         if (t):
             print("DockerExp env", t)
-            DockerExperiment(t).read_from_queue()
+            problemid = DockerExperiment(t).read_from_queue()
+            print(problemid, "Done")
+            r.rpush("experiment_finished", problemid)
         else:
             print("waiting for experiment")
 
