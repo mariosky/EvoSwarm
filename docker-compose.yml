@@ -14,7 +14,10 @@ services:
     command: python main.py
     environment:
       MESSAGE_TYPE :  ${MESSAGE_TYPE}
-      PYTHONUNBUFFERED: 1 
+      PYTHONUNBUFFERED: 1
+    deploy:
+      mode: replicated
+      replicas: 2
   
   setup:
     build: './setup'

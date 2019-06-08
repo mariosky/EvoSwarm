@@ -24,8 +24,8 @@ for hit in response['hits']['hits']:
 from rx import Observable
 Observable.range(0, 100).filter(lambda x : x > 3).take(20).buffer_with_count(2).subscribe(on_next=lambda x : print(x), on_completed = lambda : print("D"))
 
+
 import redis
-import json
 
 r = redis.StrictRedis(host='localhost', port=6379, db=0)
 y = """

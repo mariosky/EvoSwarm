@@ -51,9 +51,6 @@ class DockerExperiment():
 
         self.messages.subscribe(lambda populations : self.produce(populations), on_completed = lambda : print("MESSAGES COMPLETED") )
 
-        #self.read_from_queue()
-        # This code is unreachable
-        # We need to add a constructor and a start
 
     def one_more(self, message):
         #print(message)
@@ -107,7 +104,7 @@ class DockerExperiment():
                 #print("message:data:", pop_dict)
                 #print("message:type:", type(pop_dict))
                 if 'best_score' in pop_dict:
-                    print (pop_dict['best_score'] )
+                    print ('Best:{}, Fopt {}'.format( pop_dict['best_score'], pop_dict["fopt"] ))
 
                 print("message read from queue")
                 self.log_to_redis_coco(pop_dict)
@@ -126,7 +123,6 @@ class DockerExperiment():
         print("Produce:", ack)
 
     def log_to_redis_coco(self, population):
-        #log_name = 'log:test_pop:' + str(population['experiment']["experiment_id"])
         log_name =  "log:swarm"
         r.lpush(log_name, json.dumps(self.get_benchmark_data(population)))
 
