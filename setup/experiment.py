@@ -28,7 +28,7 @@ conf = {
     3: { 'NGEN':50, 'POP_SIZE': 100, 'MAX_ITERATIONS':30, 'MESSAGES_PSO':0, 'MESSAGES_GA':2 },
     5: { 'NGEN':50, 'POP_SIZE': 100, 'MAX_ITERATIONS':25, 'MESSAGES_PSO':0, 'MESSAGES_GA':4 },
     10:{ 'NGEN':50, 'POP_SIZE': 200, 'MAX_ITERATIONS':25, 'MESSAGES_PSO':0, 'MESSAGES_GA':8 },
-    20:{ 'NGEN':50, 'POP_SIZE': 200, 'MAX_ITERATIONS':25, 'MESSAGES_PSO':0, 'MESSAGES_GA':8 },
+    20:{ 'NGEN':50, 'POP_SIZE': 100, 'MAX_ITERATIONS':25, 'MESSAGES_PSO':0, 'MESSAGES_GA':8 },
     40:{ 'NGEN':50, 'POP_SIZE': 200, 'MAX_ITERATIONS':25, 'MESSAGES_PSO':0, 'MESSAGES_GA':16 }
     },
 
@@ -111,6 +111,8 @@ def experiment(conf):
                 
                 print("sending problem to controller")
                 
+                
+
                 r.rpush("experiment_queue",json.dumps(env))
                 #Block Until Finsihed
                 print("waiting for problem to finish")

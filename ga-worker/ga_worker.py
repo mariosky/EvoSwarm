@@ -136,5 +136,7 @@ class GA_Worker:
             self.conf['best'] = True
         else:
             self.conf['best'] = False
+        
+        #print("Worker", self.conf)
 
         return self.conf

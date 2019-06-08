@@ -44,18 +44,20 @@ class DockerExperiment():
             .take(env["problem"]["max_iterations"])\
             .buffer_with_count(3)\
             .subscribe( on_next=lambda x : self.population_mixer(x),on_completed = self.finish)
-
-        self.consumed_messages.subscribe(lambda : self.one_more(), on_completed = lambda : "MESSAGES COMPLETED"  )
+            
+            
+        self.consumed_messages.subscribe(lambda message: self.one_more(message), on_completed = lambda : print("MESSAGES COMPLETED")  )
         self.messages.publish()
 
-        self.messages.subscribe(lambda populations : self.produce(populations), on_completed = lambda :"MESSAGES COMPLETED" )
+        self.messages.subscribe(lambda populations : self.produce(populations), on_completed = lambda : print("MESSAGES COMPLETED") )
 
         #self.read_from_queue()
         # This code is unreachable
         # We need to add a constructor and a start
 
-    def one_more(self):
-        print('CONSUMED:{}'.format(self.counter))
+    def one_more(self, message):
+        #print(message)
+        print('CONSUMED:{}, Max {}'.format(self.counter, self.env["problem"]["max_iterations"]))
         self.counter+=1
 
 
@@ -123,7 +125,6 @@ class DockerExperiment():
     def log_to_redis_coco(self, population):
         #log_name = 'log:test_pop:' + str(population['experiment']["experiment_id"])
         log_name =  "log:swarm"
-        self.counter = self.counter+1
         r.lpush(log_name, json.dumps(self.get_benchmark_data(population)))
 
 
