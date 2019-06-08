@@ -104,7 +104,7 @@ class DockerExperiment():
                 #print("message:data:", pop_dict)
                 #print("message:type:", type(pop_dict))
                 if 'best_score' in pop_dict:
-                    print ('Best:{}, Fopt {}'.format( pop_dict['best_score'], pop_dict["fopt"] ))
+                    print ('Best:{}, Fopt {}, Error {}'.format( pop_dict['best_score'], pop_dict["fopt"], abs(pop_dict['best_score']-pop_dict["fopt"]) ))
 
                 print("message read from queue")
                 self.log_to_redis_coco(pop_dict)
