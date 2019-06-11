@@ -51,7 +51,7 @@ def new_populations(env, number_of_pops, n_individuals, dim, lb, ub ):
         new_env["population"] = [{"chromosome": [random.uniform(lb,ub) for _ in range(dim)], "id": None, "fitness": {"DefaultContext": 0.0}} for _ in range(n_individuals)]
         new_env["message_id"] = str (uuid.uuid4())
 
-        new_env["algorithm"] = "GA"
+        new_env["algorithm"] = "PSO"
         new_env['params']['GA']['crossover']['CXPB']  = random.uniform(conf['CXPB_RND'][0],conf['CXPB_RND'][1])
         new_env['params']['GA']['mutation']['MUTPB']  = random.uniform(conf['MUTPB_RND'][0],conf['MUTPB_RND'][1])
         
@@ -88,11 +88,11 @@ def experiment(conf):
                                 },
                                 "PSO":
                                 # Acording to https://sci2s.ugr.es/sites/default/files/files/TematicWebSites/EAMHCO/contributionsGECCO09/p2269-elabd.pdf
-                                {   "Vmax": 0.7992,
+                                {   "Vmax": 5,
                                     "wMax":  0.9,
                                     "wMin" : 0.2,
-                                    "c1":1.4944,
-                                    "c2":1.4944, 
+                                    "c1":2,
+                                    "c2":2, 
                                     "iterations": conf["DIM_CONFIGURATION"][str(dim)]['NGEN']
                                 }
                  },

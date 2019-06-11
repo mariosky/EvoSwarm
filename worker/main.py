@@ -1,4 +1,5 @@
 from ga_worker import *
+from pso_worker import *
 import redis
 import json
 import os
@@ -32,9 +33,20 @@ while True:
         #data_args = base64.b64decode(data)
         args = json.loads(data)
 
-        worker = GA_Worker(args)
-        worker.setup()
-        result = worker.run()
+       
+        result = None
+
+        if args["algorithm"] == "GA":
+            worker = GA_Worker(args)
+            worker.setup()
+            result = worker.run()
+        else:
+            worker = PSO_Worker(args)
+
+            result = worker.run()
+            #print("result:",result)
+
+       
        # Return with a format for writing to MessageHub
         data = json.dumps(result).encode('utf-8')
         print("New POPULATION Message")

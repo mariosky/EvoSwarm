@@ -56,8 +56,6 @@ def PSO(objf, dim, iters, pos, Vmax = 6, wMax = 0.9, wMin = 0.2, c1=2, c2 = 2, f
    
     convergence_curve=[]
     
-    ############################################
-    print("PSO is optimizing  \""+objf.__name__+"\"")    
     
     timerStart=time.time() 
     s.startTime=time.strftime("%Y-%m-%d-%H-%M-%S")
@@ -94,17 +92,15 @@ def PSO(objf, dim, iters, pos, Vmax = 6, wMax = 0.9, wMin = 0.2, c1=2, c2 = 2, f
                 pos[i,j]=pos[i,j]+vel[i,j]
         
         #convergence_curve[l]=gBestScore
-        convergence_curve.append((l, gBestScore, list(gBest)));
+        convergence_curve.append((l, gBestScore, list(gBest)))
       
-        if (l%1==0) and 'verbose' in kwargs:
-               print(['At iteration '+ str(l+1)+ ' the best fitness is '+ str(gBestScore)]);
+
     timerEnd=time.time()
-    s.best=gBestScore
+    s.bestScore=gBestScore
+    s.best = list(gBest)
     s.endTime=time.strftime("%Y-%m-%d-%H-%M-%S")
     s.executionTime=timerEnd-timerStart
     s.convergence=list(convergence_curve)
-    s.optimizer="PSO"
-    s.objfname=objf.__name__
     s.pop = list(pos)
 
     return s
