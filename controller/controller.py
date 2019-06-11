@@ -135,10 +135,12 @@ class DockerExperiment():
                 "worker_id":"NA",
                 "params":{"sample_size":population["population_size"],
                         "init":"random:[-5,5]",
-                        "NGEN":population["algorithm"]["iterations"]
+                        "NGEN":population["params"]["GA"]["iterations"]
                         },
                 "experiment_id":population['experiment']["experiment_id"],
-                "algorithm":population["algorithm"]["name"],
+                "algorithm":population["algorithm"],
+                "alg_params":population["params"][population["algorithm"]],
+
                 "dim":population["problem"]["dim"],
                 "benchmark":population["problem"]["function"],
                 "fopt":population["fopt"],

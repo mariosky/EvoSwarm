@@ -5,15 +5,14 @@ services:
     ports:
       - "6379:6379"
 
-  ga_worker:
-    build: './ga_worker'
+  worker:
+    build: './worker'
     depends_on:
       - redis
     volumes:
-      - ./ga_worker:/code
+      - ./worker:/code
     command: python main.py
     environment:
-      MESSAGE_TYPE :  ${MESSAGE_TYPE}
       PYTHONUNBUFFERED: 1
     deploy:
       mode: replicated
@@ -27,7 +26,6 @@ services:
       - ./setup:/code
     command: python experiment.py
     environment:
-      MESSAGE_TYPE: ${MESSAGE_TYPE}
       PYTHONUNBUFFERED: 1
 
   controller:
@@ -38,7 +36,6 @@ services:
       - ./controller:/code
     command: python controller.py
     environment:
-      MESSAGE_TYPE: ${MESSAGE_TYPE}
       PYTHONUNBUFFERED: 1
   
   # elasticsearch:

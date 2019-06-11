@@ -50,9 +50,10 @@ def new_populations(env, number_of_pops, n_individuals, dim, lb, ub ):
         new_env = dict(env)
         new_env["population"] = [{"chromosome": [random.uniform(lb,ub) for _ in range(dim)], "id": None, "fitness": {"DefaultContext": 0.0}} for _ in range(n_individuals)]
         new_env["message_id"] = str (uuid.uuid4())
-        
-        new_env['algorithm']['crossover']['CXPB']  = random.uniform(conf['CXPB_RND'][0],conf['CXPB_RND'][1])
-        new_env['algorithm']['mutation']['MUTPB']  = random.uniform(conf['MUTPB_RND'][0],conf['MUTPB_RND'][1])
+
+        new_env["algorithm"] = "GA"
+        new_env['params']['GA']['crossover']['CXPB']  = random.uniform(conf['CXPB_RND'][0],conf['CXPB_RND'][1])
+        new_env['params']['GA']['mutation']['MUTPB']  = random.uniform(conf['MUTPB_RND'][0],conf['MUTPB_RND'][1])
         
         
         message_list.append(new_env)
@@ -77,11 +78,25 @@ def experiment(conf):
                  "population": [],
                  "population_size": conf["DIM_CONFIGURATION"][str(dim)]['POP_SIZE'],
                  "id": "1",
-                 "algorithm": {"crossover": {"type": "cxTwoPoint", "CXPB_RND": conf["CXPB_RND"] },
-                               "name": "GA",
-                               "mutation": {"MUTPB_RND":conf["MUTPB_RND"], "indpb": 0.05, "sigma": 0.5, "type": "mutGaussian", "mu": 0},
-                               "selection": {"type": "tools.selTournament", "tournsize": 2},
-                               "iterations": conf["DIM_CONFIGURATION"][str(dim)]['NGEN']},
+                 "algorithm": None, 
+                 "params": { "GA" : 
+                                {   "crossover": {"type": "cxTwoPoint", "CXPB_RND": conf["CXPB_RND"] },
+                                    "mutation": {"MUTPB_RND":conf["MUTPB_RND"], "indpb": 0.05, "sigma": 0.5, "type": "mutGaussian", "mu": 0},
+                                    "selection": {"type": "tools.selTournament", "tournsize": 2},
+                                    "iterations": conf["DIM_CONFIGURATION"][str(dim)]['NGEN'],
+                                    
+                                },
+                                "PSO":
+                                # Acording to https://sci2s.ugr.es/sites/default/files/files/TematicWebSites/EAMHCO/contributionsGECCO09/p2269-elabd.pdf
+                                {   "Vmax": 0.7992,
+                                    "wMax":  0.9,
+                                    "wMin" : 0.2,
+                                    "c1":1.4944,
+                                    "c2":1.4944, 
+                                    "iterations": conf["DIM_CONFIGURATION"][str(dim)]['NGEN']
+                                }
+                 },
+
                  "experiment":
                      {"type": "benchmark", "experiment_id": conf['EXPERIMENT_ID']}}
 

@@ -29,13 +29,12 @@ class GA_Worker:
             creator.create("Individual", list, typecode='d', fitness=creator.FitnessMin)
         self.toolbox = base.Toolbox()
         self.toolbox.register("attr_float", random.uniform, -5, 5)
-        self.toolbox.register("individual", tools.initRepeat, creator.Individual,
-        self.toolbox.attr_float, self.conf['problem']['dim'])
+        self.toolbox.register("individual", tools.initRepeat, creator.Individual, self.toolbox.attr_float, self.conf['problem']['dim'])
         self.toolbox.register("population", tools.initRepeat, list, self.toolbox.individual)
         self.toolbox.register("evaluate", self.eval)
         self.toolbox.register("mate", tools.cxTwoPoint)
-        self.toolbox.register("mutate", tools.mutGaussian, mu=self.conf['algorithm']['mutation']['mu'], sigma=self.conf['algorithm']['mutation']['sigma'], indpb=self.conf['algorithm']['mutation']['indpb'])
-        self.toolbox.register("select", tools.selTournament, tournsize=self.conf['algorithm']['selection']['tournsize'])
+        self.toolbox.register("mutate", tools.mutGaussian, mu=self.conf['params']['GA']['mutation']['mu'], sigma=self.conf['params']['GA']['mutation']['sigma'], indpb=self.conf['params']['GA']['mutation']['indpb'])
+        self.toolbox.register("select", tools.selTournament, tournsize=self.conf['params']['GA']['selection']['tournsize'])
 
     def eval(self, individual):
         return  self.function(individual),
@@ -60,10 +59,10 @@ class GA_Worker:
 
         #random.seed(i)
 
-        CXPB = self.conf['algorithm']['crossover']['CXPB']
-        MUTPB = self.conf['algorithm']['mutation']['MUTPB']
+        CXPB = self.conf['params']['GA']['crossover']['CXPB']
+        MUTPB = self.conf['params']['GA']['mutation']['MUTPB']
         
-        NGEN = self.conf['algorithm']['iterations']
+        NGEN = self.conf['params']['GA']['iterations']
         pop = self.get()
 
 
