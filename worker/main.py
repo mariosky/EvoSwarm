@@ -35,6 +35,7 @@ while True:
 
        
         result = None
+        print(args["algorithm"])
 
         if args["algorithm"] == "GA":
             worker = GA_Worker(args)

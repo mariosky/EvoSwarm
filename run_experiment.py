@@ -14,6 +14,7 @@ y = """
         "40":{ "NGEN":50, "POP_SIZE": 200, "MAX_ITERATIONS":25, "MESSAGES_PSO":0, "MESSAGES_GA":16 }
     },
     "EXPERIMENT_ID" : "1234",
+    "GA_WORKER_RATIO" : 0.5,
 
     "FUNCTIONS": [4],
     "DIMENSIONS" : [10],

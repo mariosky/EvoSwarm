@@ -50,8 +50,10 @@ def new_populations(env, number_of_pops, n_individuals, dim, lb, ub ):
         new_env = dict(env)
         new_env["population"] = [{"chromosome": [random.uniform(lb,ub) for _ in range(dim)], "id": None, "fitness": {"DefaultContext": 0.0}} for _ in range(n_individuals)]
         new_env["message_id"] = str (uuid.uuid4())
-
-        new_env["algorithm"] = "PSO"
+        if random.random() > env["experiment"]["ga_worker_ratio"]:
+            new_env["algorithm"] = "PSO"
+        else:
+            new_env["algorithm"] = "GA"
         new_env['params']['GA']['crossover']['CXPB']  = random.uniform(conf['CXPB_RND'][0],conf['CXPB_RND'][1])
         new_env['params']['GA']['mutation']['MUTPB']  = random.uniform(conf['MUTPB_RND'][0],conf['MUTPB_RND'][1])
         
@@ -98,7 +100,7 @@ def experiment(conf):
                  },
 
                  "experiment":
-                     {"type": "benchmark", "experiment_id": conf['EXPERIMENT_ID']}}
+                     {"type": "benchmark", "experiment_id": conf['EXPERIMENT_ID'], "ga_worker_ratio":conf['GA_WORKER_RATIO']  }}
 
                 #Initialize pops
                 _messages = new_populations(env, conf["DIM_CONFIGURATION"][str(dim)]['MESSAGES_GA'] , conf["DIM_CONFIGURATION"][str(dim)]['POP_SIZE'],env["problem"]["dim"], env["problem"]["search_space"][0], env["problem"]["search_space"][1])
