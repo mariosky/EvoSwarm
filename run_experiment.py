@@ -13,7 +13,7 @@ y = """
         "20":{ "NGEN":50, "POP_SIZE": 200, "MAX_ITERATIONS":25, "MESSAGES_PSO":0, "MESSAGES_GA":8 },
         "40":{ "NGEN":50, "POP_SIZE": 200, "MAX_ITERATIONS":25, "MESSAGES_PSO":0, "MESSAGES_GA":16 }
     },
-    "EXPERIMENT_ID" : "1234",
+    "EXPERIMENT_ID" : "314152",
     "GA_WORKER_RATIO" : 0.5,
 
     "FUNCTIONS": [4],
@@ -24,4 +24,4 @@ y = """
 }
 """
 
-r.rpush("setup_queue" ,y)
+r.rpush("setup_queue", y)
