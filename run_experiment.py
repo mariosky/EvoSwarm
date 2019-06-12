@@ -13,4 +13,5 @@ else:
 with open(configuration,"r") as conf:
     configuration_data = json.load(conf)
 
-r.rpush("setup_queue", configuration_data)
+print(configuration_data)
+r.rpush("setup_queue", json.dumps(configuration_data))
