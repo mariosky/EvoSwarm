@@ -13,24 +13,6 @@ class PSO_Worker:
         self.deltaftarget = 1e-8
         self.worker_uuid = uuid.uuid1()
 
-    # def put_back(self, s):
-       
-
-    #     self.evospace_sample['sample'] = final_pop
-
-
-    #     if 'benchmark' in self.conf:
-    #         experiment_id = 'experiment_id' in conf and conf['experiment_id'] or 0
-    #         self.evospace_sample['benchmark_data'] = {'params': self.params, 'evals': s.convergence, 'algorithm': 'PSO',
-    #                                                   'benchmark': self.conf['function'],
-    #                                                   'instance': self.conf['instance'],
-    #                                                   'worker_id': str(self.worker_uuid),
-    #                                                   'experiment_id': experiment_id,
-    #                                                   'dim': self.conf['dim'],
-    #                                                   'fopt': self.function.getfopt()
-    #                                                   }
-    #     self.space.put_sample(self.evospace_sample)
-
     def get_pop(self):
         pop = [cs['chromosome'] for cs in self.conf['population']]
         return np.array(pop)
