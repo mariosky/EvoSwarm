@@ -1,6 +1,7 @@
 
 import urllib.parse, ast
 import os, redis, json
+import sys
 from coco import CoCoData
 from itertools import groupby
 from operator import itemgetter
@@ -75,13 +76,11 @@ def process_logs(experiment_id, list_name = "log:swarm", redis_host = 'localhost
             for row in benchmark:
                 data_row = []
                 row_id=0
-                print(row)
                 for e in row['evals']:
                     # We have to change this to a more practical solution
 
                     num_evals = row['params']['sample_size']
                     
-                    print(e)
                     if len(e) >= 4:
                         num_evals = e['num_of_evals']
 
@@ -129,3 +128,6 @@ def process_logs(experiment_id, list_name = "log:swarm", redis_host = 'localhost
 
             f.close()
     return DATA_FOLDER
+
+if __name__ == "__main__":
+    process_logs(sys.argv[1])
