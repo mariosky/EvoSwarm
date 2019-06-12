@@ -15,35 +15,7 @@ WORKER_HEARTBEAT_INTERVAL = 10
 
 r = redis.StrictRedis(host='redis', port=6379, db=0)
 
-conf = {
-#Example from EvoSpace
-# Parameter configuration for each dimension 10**5 * D
-# 2: 200,000
-# 3: 300,000
-# 5: 500,000
-
-# 40: 4,000,000
-"DIM_CONFIGURATION" : {
-    2: { 'NGEN':50, 'POP_SIZE': 100, 'MAX_ITERATIONS':20, 'MESSAGES_PSO':0, 'MESSAGES_GA':6 },
-    3: { 'NGEN':50, 'POP_SIZE': 100, 'MAX_ITERATIONS':30, 'MESSAGES_PSO':0, 'MESSAGES_GA':2 },
-    5: { 'NGEN':50, 'POP_SIZE': 100, 'MAX_ITERATIONS':25, 'MESSAGES_PSO':0, 'MESSAGES_GA':4 },
-    10:{ 'NGEN':50, 'POP_SIZE': 200, 'MAX_ITERATIONS':25, 'MESSAGES_PSO':0, 'MESSAGES_GA':8 },
-    20:{ 'NGEN':50, 'POP_SIZE': 100, 'MAX_ITERATIONS':25, 'MESSAGES_PSO':0, 'MESSAGES_GA':8 },
-    40:{ 'NGEN':50, 'POP_SIZE': 200, 'MAX_ITERATIONS':25, 'MESSAGES_PSO':0, 'MESSAGES_GA':16 }
-    },
-
-
-
-    'EXPERIMENT_ID' : int(time.time()),
-
-    'FUNCTIONS' : [3],
-    'DIMENSIONS' : [10],       #(2,3,5,10,20)
-    'INSTANCES' : [1],  #list(range(1,6)) + list(range(41, 51))
-    "CXPB_RND": [0.2, 0.6],
-    "MUTPB_RND": [0.1, 0.3],
-}
-
-def new_populations(env, number_of_pops, n_individuals, dim, lb, ub ):
+def new_populations(env,conf ,number_of_pops, n_individuals, dim, lb, ub ):
     import random
     message_list = []
     for pop in range(number_of_pops):
@@ -103,7 +75,7 @@ def experiment(conf):
                      {"type": "benchmark", "experiment_id": conf['EXPERIMENT_ID'], "ga_worker_ratio":conf['GA_WORKER_RATIO']  }}
 
                 #Initialize pops
-                _messages = new_populations(env, conf["DIM_CONFIGURATION"][str(dim)]['MESSAGES_GA'] , conf["DIM_CONFIGURATION"][str(dim)]['POP_SIZE'],env["problem"]["dim"], env["problem"]["search_space"][0], env["problem"]["search_space"][1])
+                _messages = new_populations(env,conf ,conf["DIM_CONFIGURATION"][str(dim)]['MESSAGES_GA'] , conf["DIM_CONFIGURATION"][str(dim)]['POP_SIZE'],env["problem"]["dim"], env["problem"]["search_space"][0], env["problem"]["search_space"][1])
                 print("messages created")
 
                 print("Checking redis with ping")

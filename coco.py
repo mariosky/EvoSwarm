@@ -1,5 +1,5 @@
 import numpy as np
-import ga_worker.bbobbenchmarks as bn
+import worker.bbobbenchmarks as bn
 import random
 
 class CoCoData(object):

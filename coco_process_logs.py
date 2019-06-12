@@ -6,12 +6,12 @@ from itertools import groupby
 from operator import itemgetter
  
 
-def process_logs(experiment_id, list_name, redis_host = 'localhost', redis_port = 6379):
+def process_logs(experiment_id, list_name = "log:swarm", redis_host = 'localhost', redis_port = 6379):
     r = redis.Redis(host=redis_host, port=redis_port)
 
     DATA_FOLDER = './experiment_data/' + str(experiment_id) + '/'
     experiment = 'swarm_ea' +':' + str(experiment_id)
-    data = [json.loads(i) for i in r.lrange( list_name, 0, -1) if json.loads(i)['experiment_id'] == '1234']
+    data = [json.loads(i) for i in r.lrange( list_name, 0, -1) if json.loads(i)['experiment_id'] == str(experiment_id)]
     #data = [json.loads(i) for i in r.lrange(experiment, 0, -1)]
     data.reverse()
 
@@ -75,12 +75,13 @@ def process_logs(experiment_id, list_name, redis_host = 'localhost', redis_port 
             for row in benchmark:
                 data_row = []
                 row_id=0
+                print(row)
                 for e in row['evals']:
                     # We have to change this to a more practical solution
 
                     num_evals = row['params']['sample_size']
                     
-
+                    print(e)
                     if len(e) >= 4:
                         num_evals = e['num_of_evals']
 

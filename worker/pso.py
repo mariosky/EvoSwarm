@@ -92,7 +92,9 @@ def PSO(objf, dim, iters, pos, Vmax = 6, wMax = 0.9, wMin = 0.2, c1=2, c2 = 2, f
                 pos[i,j]=pos[i,j]+vel[i,j]
         
         #convergence_curve[l]=gBestScore
-        convergence_curve.append((l, gBestScore, list(gBest)))
+        convergence_curve.append({"gen_num":l,"best_fitness":gBestScore,"best_solution":list(gBest), "num_of_evals":PopSize })
+
+        
       
 
     timerEnd=time.time()
