@@ -139,6 +139,7 @@ class DockerExperiment():
 
 
     def get_benchmark_data(self, population):
+        #print("\n\npopulation\n\n", population)
         return {"evals": population["iterations"],
                 "instance":population["problem"]["instance"],
                 "worker_id":population["worker_id"],
