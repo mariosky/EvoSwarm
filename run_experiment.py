@@ -18,7 +18,7 @@ with open(configuration,"r") as conf:
 configuration_data['EXPERIMENT_ID'] = str(id)
 configuration_data['INSTANCES'] = []
 for i in range(15):
-    configuration_data['INSTANCES'].append(1)
+    configuration_data['INSTANCES'].append(i+1)
     
 print(configuration_data)
 
