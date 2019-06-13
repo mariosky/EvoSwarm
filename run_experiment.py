@@ -15,7 +15,7 @@ else:
 with open(configuration,"r") as conf:
     configuration_data = json.load(conf)
 
-    configuration_data['EXPERIMENT_ID'] = id
+configuration_data['EXPERIMENT_ID'] = str(id)
 print(configuration_data)
 
 r.rpush("setup_queue", json.dumps(configuration_data))
