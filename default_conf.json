@@ -1,7 +1,7 @@
 {
     "DIM_CONFIGURATION" : 
     {
-        "10":{ "NGEN":50, "POP_SIZE": 100, "MAX_ITERATIONS":25, "MESSAGES_PSO":0, "MESSAGES_GA":8 },
+        "10":{ "NGEN":50, "POP_SIZE": 100, "MAX_ITERATIONS":25, "MESSAGES_PSO":0, "MESSAGES_GA":8 }
     },
     "GA_WORKER_RATIO" : 0.5,
     "FUNCTIONS": [4],
