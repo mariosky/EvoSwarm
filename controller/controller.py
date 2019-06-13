@@ -56,6 +56,12 @@ class DockerExperiment():
         #print(message)
         print('CONSUMED:{}, Max {}'.format(self.counter, self.env["problem"]["max_iterations"]))
         self.counter+=1
+        if 'best_score' in message:
+            error = abs(message['best_score']-message["fopt"])
+            print ('Best:{}, Fopt {}, Error {}'.format( message['best_score'], message["fopt"], error  ))
+            
+            if 1e-8 >= error:
+                self.finish()
 
 
         
@@ -103,11 +109,11 @@ class DockerExperiment():
                 
                 #print("message:data:", pop_dict)
                 #print("message:type:", type(pop_dict))
-                if 'best_score' in pop_dict:
-                    error = abs(pop_dict['best_score']-pop_dict["fopt"])
-                    print ('Best:{}, Fopt {}, Error {}'.format( pop_dict['best_score'], pop_dict["fopt"], error  ))
-                if 1e-8 >= error:
-                    self.state = "stop"  
+                #if 'best_score' in pop_dict:
+                #    error = abs(pop_dict['best_score']-pop_dict["fopt"])
+                #    print ('Best:{}, Fopt {}, Error {}'.format( pop_dict['best_score'], pop_dict["fopt"], error  ))
+                #if 1e-8 >= error:
+                #    self.finish()
 
                 print("message read from queue")
                 self.log_to_redis_coco(pop_dict)
@@ -135,7 +141,7 @@ class DockerExperiment():
     def get_benchmark_data(self, population):
         return {"evals": population["iterations"],
                 "instance":population["problem"]["instance"],
-                "worker_id":"NA",
+                "worker_id":population["worker_id"],
                 "params":{"sample_size":population["population_size"],
                         "init":"random:[-5,5]",
                         "NGEN":population["params"]["GA"]["iterations"]
@@ -148,6 +154,7 @@ class DockerExperiment():
                 "benchmark":population["problem"]["function"],
                 "fopt":population["fopt"],
                 "message_counter": self.counter,
+                "message_id":population["message_id"],
                 "best_score": ("best_score" in population and population["best_score"]) or None }
 
 

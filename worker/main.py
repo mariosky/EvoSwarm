@@ -5,12 +5,13 @@ import json
 import os
 import time
 import base64
+import uuid
 
-# This function runs inside container together with a redis container
+
 
 TOPIC_CONSUME =   "population-objects"
 TOPIC_PRODUCE =   "evolved-population-objects"
-
+WORKER_ID = str (uuid.uuid4())
 
 r = redis.StrictRedis(host='redis', port=6379, db=0)
 
@@ -36,6 +37,7 @@ while True:
        
         result = None
         print(args["algorithm"])
+        args["worker_id"] =  WORKER_ID
 
         if args["algorithm"] == "GA":
             worker = GA_Worker(args)
@@ -51,7 +53,7 @@ while True:
        # Return with a format for writing to MessageHub
         data = json.dumps(result).encode('utf-8')
         print("New POPULATION Message")
-        r.publish(TOPIC_PRODUCE, data)
+        #r.publish(TOPIC_PRODUCE, data)
         r.lpush(TOPIC_PRODUCE, data)
 
     else:
