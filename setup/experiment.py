@@ -18,7 +18,7 @@ r = redis.StrictRedis(host='redis', port=6379, db=0)
 def new_populations(env,conf ,number_of_pops, n_individuals, dim, lb, ub ):
     import random
     message_list = []
-    for pop in range(number_of_pops):
+    for _ in range(number_of_pops):
         new_env = dict(env)
         new_env["population"] = [{"chromosome": [random.uniform(lb,ub) for _ in range(dim)], "id": None, "fitness": {"DefaultContext": 0.0}} for _ in range(n_individuals)]
         new_env["message_id"] = str (uuid.uuid4())
