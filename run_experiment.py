@@ -1,7 +1,6 @@
 import redis
 from datetime import datetime
 
-<<<<<<< HEAD
 import sys
 import json
 
