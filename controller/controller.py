@@ -25,9 +25,6 @@ while not redis_ready:
     
 print("redis alive")
 
-consumer = r.pubsub()
-consumer.subscribe(TOPIC_CONSUME)
-
 
 
 
