@@ -8,12 +8,9 @@
         "20":{ "NGEN":50, "POP_SIZE": 160, "MAX_ITERATIONS":25, "MESSAGES_PSO":0, "MESSAGES_GA":10 },
         "40":{ "NGEN":50, "POP_SIZE": 200, "MAX_ITERATIONS":25, "MESSAGES_PSO":0, "MESSAGES_GA":16 }
     },
-    "EXPERIMENT_ID" : "JJ1",
     "GA_WORKER_RATIO" : 0.5,
-
     "FUNCTIONS": [4],
     "DIMENSIONS" : [2,3,5,10,20,40],
-    "INSTANCES" : [1,2,3,4,5,41,42,43,44,45,46,47,48,49,50],  
     "CXPB_RND": [0.2, 0.6],
     "MUTPB_RND": [0.1, 0.3]
 }
