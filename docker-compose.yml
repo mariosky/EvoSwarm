@@ -14,9 +14,7 @@ services:
     command: python main.py
     environment:
       PYTHONUNBUFFERED: 1
-    deploy:
-      mode: replicated
-      replicas: 2
+
   
   setup:
     build: './setup'
