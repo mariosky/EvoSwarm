@@ -2,26 +2,47 @@
 
 Stateless Genetic Algorithm Worker
 
+## Requeriments
 
-```
- "algorithm": {"crossover": {"type": "cxTwoPoint", "CXPB_RND": conf["CXPB_RND"] },
-                               "name": "GA",
-                               "mutation": {"MUTPB_RND":conf["MUTPB_RND"], "indpb": 0.05, "sigma": 0.5, "type": "mutGaussian", "mu": 0},
-                               "selection": {"type": "tools.selTournament", "tournsize": 2},
-                               "iterations": conf["DIM_CONFIGURATION"][str(dim)]['NGEN']},
-```
+1. You need docker,  docker-compose
+2. A git client
+3. Python3
 
-## Run
+
+## Install
+
+1. Clone this repo
+```
+git clone https://github.com/mariosky/swarm-ga-worker.git
+```
+2. From the root of the project:
+
+    You will need to use 
+```
+    pip3 install -r requirements.txt
+```    
+   to install the needed library files.
+
+
+## Run the service
 
 Redis needs to be stopped before this, because it uses the same port.
+After `docker-compose up`, which downloads and starts the services. 
+Wait until the controller is ready:
+```
+controller_1  | waiting for experiment
+controller_1  | pulling   
+```
 
-You will need to use 
+## Execute an experiment
 
-    pip install -r requirements.txt
-    
-to install the needed library files.
+From another terminal add or modify a json configuration file
+and add a new  experiment to the queue:
+```
+python3 run_experiment.py your_conf.json 
+```
 
-After `docker-compose up`, which starts the services
+
 
 ## COCO
 
