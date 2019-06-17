@@ -91,8 +91,8 @@ def experiment(conf):
                     print("message")
                     
                     print("sending to",TOPIC_PRODUCE )
-                    result = r.lpush(TOPIC_PRODUCE, message)
-                    print("lpush", result)
+                    result = r.rpush(TOPIC_PRODUCE, message)
+                    print("rpush", result)
 
                 
                 print(function,dim, instance )

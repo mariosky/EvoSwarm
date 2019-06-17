@@ -126,12 +126,12 @@ class DockerExperiment():
         json_data = json.dumps(population)
         # Data must be a bytestring
         message = json_data.encode('utf-8')
-        ack = r.lpush(TOPIC_PRODUCE, message)
+        ack = r.rpush(TOPIC_PRODUCE, message)
         print("Produce:", ack)
 
     def log_to_redis_coco(self, population):
         log_name =  "log:swarm"
-        r.lpush(log_name, json.dumps(self.get_benchmark_data(population)))
+        r.rpush(log_name, json.dumps(self.get_benchmark_data(population)))
 
 
 

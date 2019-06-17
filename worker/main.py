@@ -54,7 +54,7 @@ while True:
         data = json.dumps(result).encode('utf-8')
         print("New POPULATION Message")
         #r.publish(TOPIC_PRODUCE, data)
-        r.lpush(TOPIC_PRODUCE, data)
+        r.rpush(TOPIC_PRODUCE, data)
 
     else:
         #print("no message")

@@ -11,10 +11,10 @@ def process_logs(experiment_id, list_name = "log:swarm", redis_host = 'localhost
     r = redis.Redis(host=redis_host, port=redis_port)
 
     DATA_FOLDER = './experiment_data/' + str(experiment_id) + '/'
-    experiment = 'swarm_ea' +':' + str(experiment_id)
+    experiment = 'swarm_ea' +'_' + str(experiment_id)
     data = [json.loads(i) for i in r.lrange( list_name, 0, -1) if json.loads(i)['experiment_id'] == str(experiment_id)]
     #data = [json.loads(i) for i in r.lrange(experiment, 0, -1)]
-    data.reverse()
+    #data.reverse()
 
     #IF not exisits
     try:
