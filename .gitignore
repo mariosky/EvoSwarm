@@ -11,6 +11,8 @@ experiment_data/
 # elastic search data
 esdata/
 
+# coco generated files
+ppdata/
 # Distribution / packaging
 .Python
 build/

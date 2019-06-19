@@ -92,11 +92,12 @@ class DockerExperiment():
         
     
     def read_from_queue(self):
-        print("worker start")
         while self.state == 'work':
             print('working')
             data = None
-            message =  r.blpop(TOPIC_CONSUME, 2)
+            # if we need a QUEUE we use blpop
+            # in this case we are using a stack brpop
+            message =  r.brpop(TOPIC_CONSUME, 2)
             if not message:
                 print("NO DATA, WAITING...")
                 time.sleep(2)                 
@@ -104,15 +105,7 @@ class DockerExperiment():
                 data = message[1]
                 
                 pop_dict = json.loads(data)
-                
-                #print("message:data:", pop_dict)
-                #print("message:type:", type(pop_dict))
-                #if 'best_score' in pop_dict:
-                #    error = abs(pop_dict['best_score']-pop_dict["fopt"])
-                #    print ('Best:{}, Fopt {}, Error {}'.format( pop_dict['best_score'], pop_dict["fopt"], error  ))
-                #if 1e-8 >= error:
-                #    self.finish()
-
+        
                 print("message read from queue")
                 self.log_to_redis_coco(pop_dict)
                 self.consumed_messages.on_next(pop_dict)
