@@ -54,7 +54,7 @@ class DockerExperiment():
         #print(message)
         print('CONSUMED:{}, Max {}'.format(self.counter, self.env["problem"]["max_iterations"]))
         self.counter+=1
-        if 'best_score' in message:
+        if 'best_score' in message and message["problem"]["problem_id"] == self.problem_id:
             error = abs(message['best_score']-message["fopt"])
             print ('Best:{}, Fopt {}, Error {}'.format( message['best_score'], message["fopt"], error  ))
             
