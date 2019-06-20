@@ -69,7 +69,7 @@ class DockerExperiment():
         print("Consume Finished")
         self.state = "stop"
         self.messages.on_completed()
-        self.messages.dispose()
+        #self.messages.dispose() # not needed? Raised an exception
         #sys.exit(0)
 
 
