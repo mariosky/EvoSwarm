@@ -96,8 +96,8 @@ class DockerExperiment():
             print('working')
             data = None
             # if we need a QUEUE we use blpop
-            # in this case we are using a stack brpop
-            message =  r.brpop(TOPIC_CONSUME, 2)
+            # we can also use a STACK with brpop
+            message =  r.blpop(TOPIC_CONSUME, 2)
             if not message:
                 print("NO DATA, WAITING...")
                 time.sleep(2)                 
