@@ -37,16 +37,18 @@ class DockerExperiment():
         self.consumed_messages = Subject()
         self.messages = Subject()
         self.population_objects_topic = "population-objects"
-        self.consumed_messages\
-            .filter(lambda x: x["problem"]["problem_id"] == self.problem_id) \
-            .take(env["problem"]["max_iterations"])\
-            .buffer_with_count(3)\
-            .subscribe( on_next=lambda x : self.population_mixer(x),on_completed = self.finish)
+        self.valid_messages = self.consumed_messages\
+                               .filter(lambda x: x["problem"]["problem_id"] == self.problem_id) \
+                               .take(env["problem"]["max_iterations"]).publish()
             
-            
-        self.consumed_messages.subscribe(lambda message: self.one_more(message), on_completed = lambda : print("MESSAGES COMPLETED")  )
-        self.messages.publish()
+        self.valid_messages.buffer_with_count(3)\
+                            .subscribe( on_next=lambda x : self.population_mixer(x), on_completed = self.finish)
 
+        self.valid_messages.subscribe(lambda message: self.one_more(message), on_completed = lambda : print("MESSAGES COMPLETED"))
+        #self.valid_messages.subscribe(lambda message: self.log_to_redis_coco(message), on_completed = lambda : print("MESSAGES COMPLETED"))
+        self.valid_messages.connect()
+
+        self.messages.publish()
         self.messages.subscribe(lambda populations : self.produce(populations), on_completed = lambda : print("MESSAGES COMPLETED") )
 
 
@@ -54,12 +56,13 @@ class DockerExperiment():
         #print(message)
         print('CONSUMED:{}, Max {}'.format(self.counter, self.env["problem"]["max_iterations"]))
         self.counter+=1
-        #if 'best_score' in message and message["problem"]["problem_id"] == self.problem_id:
-        #    error = abs(message['best_score']-message["fopt"])
-        #    print ('Best:{}, Fopt {}, Error {}'.format( message['best_score'], message["fopt"], error  ))
+        self.log_to_redis_coco(message)
+        if 'best_score' in message and message["problem"]["problem_id"] == self.problem_id:
+            error = abs(message['best_score']-message["fopt"])
+            print ('Best:{}, Fopt {}, Error {}'.format( message['best_score'], message["fopt"], error  ))
             
-            #if 1e-8 >= error:
-            #    self.finish()
+            if 1e-8 >= error:
+                self.finish()
 
 
         
@@ -68,6 +71,7 @@ class DockerExperiment():
 
         print("Consume Finished")
         self.state = "stop"
+        self.consumed_messages.on_completed()
         self.messages.on_completed()
         #self.messages.dispose() # not needed? Raised an exception
         #sys.exit(0)
@@ -80,7 +84,7 @@ class DockerExperiment():
         if len(populations) == 3:
             print("MIXER:",len(populations))
             #populations = [json.loads(message.data) for message in populations]contr
-            populations[0]['population'] = cxBestFromEach(populations[0]['population'],populations[1]['population'])
+            populations[0]['population'] = cxBestFromEach(populations[0]['population'], populations[1]['population'])
             populations[1]['population'] = cxBestFromEach(populations[1]['population'], populations[2]['population'])
             populations[2]['population'] = cxBestFromEach(populations[2]['population'], populations[0]['population'])
 
@@ -107,7 +111,7 @@ class DockerExperiment():
                 pop_dict = json.loads(data)
         
                 print("message read from queue")
-                self.log_to_redis_coco(pop_dict)
+               
                 self.consumed_messages.on_next(pop_dict)
         
         return self.problem_id

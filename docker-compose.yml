@@ -14,6 +14,72 @@ services:
     command: python main.py
     environment:
       PYTHONUNBUFFERED: 1
+  worker1:
+    build: './worker'
+    depends_on:
+      - redis
+    volumes:
+      - ./worker:/code
+    command: python main.py
+    environment:
+      PYTHONUNBUFFERED: 1
+  worker2:
+    build: './worker'
+    depends_on:
+      - redis
+    volumes:
+      - ./worker:/code
+    command: python main.py
+    environment:
+      PYTHONUNBUFFERED: 1
+  worker3:
+    build: './worker'
+    depends_on:
+      - redis
+    volumes:
+      - ./worker:/code
+    command: python main.py
+    environment:
+      PYTHONUNBUFFERED: 1
+  
+  worker4:
+    build: './worker'
+    depends_on:
+      - redis
+    volumes:
+      - ./worker:/code
+    command: python main.py
+    environment:
+      PYTHONUNBUFFERED: 1
+  worker5:
+    build: './worker'
+    depends_on:
+      - redis
+    volumes:
+      - ./worker:/code
+    command: python main.py
+    environment:
+      PYTHONUNBUFFERED: 1
+  worker6:
+    build: './worker'
+    depends_on:
+      - redis
+    volumes:
+      - ./worker:/code
+    command: python main.py
+    environment:
+      PYTHONUNBUFFERED: 1
+  worker7:
+    build: './worker'
+    depends_on:
+      - redis
+    volumes:
+      - ./worker:/code
+    command: python main.py
+    environment:
+      PYTHONUNBUFFERED: 1
+
+
 
   
   setup:
