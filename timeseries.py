@@ -59,5 +59,6 @@ for worker_index , file in enumerate(file_list):
             if worker_index == 0:
                 ax.set_title('{}D'.format(name))
 
+f.suptitle('Number of Populations (Messages)')
 plt.setp(axes)
 plt.show()
