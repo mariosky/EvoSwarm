@@ -22,7 +22,9 @@ def process_logs(experiment_id, list_name = "log:swarm", redis_host = 'localhost
     except OSError:
         pass
     with open(DATA_FOLDER+experiment+'.json', 'w') as f:
-        json.dump(data, f)
+        for d in data:
+            f.write(d +'\n')
+           #json.dump(data, f)
 
 
     grp_benchmark = itemgetter("benchmark","dim")

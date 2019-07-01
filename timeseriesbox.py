@@ -22,7 +22,7 @@ file_list = [r'D:\exp_data\1561526317_1w\swarm_ea_1561526317.json',
             ]
 
 def get_data_frame(file):
-    data = pd.read_json(file, low_memory=False )
+    data = pd.read_json(file )
     data.drop([ 'alg_params','evals', 'algorithm', 'best_score', 'experiment_id', 
     'message_counter', 'message_id', 'params', 'worker_id'], axis = 1 )
     data.time_stamp = data.time_stamp.apply(pd.to_datetime)
