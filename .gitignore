@@ -5,6 +5,8 @@ __pycache__/
 
 .vscode
 experiment_data/
+# experiment files
+*.csv 
 # C extensions
 *.so
 

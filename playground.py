@@ -27,14 +27,15 @@ data = None
 
 #for dim_key, benchmark_group in groupby(data, grp_benchmark):
 #    print(dim_key, benchmark_group)
-with open(r'D:\exp_data\1561750813\swarm_ea_1561750813.json') as json_file: 
+with open(r'D:\exp_data\1561769371\swarm_ea_1561769371.json') as json_file: 
 #with open(r'experiment_data\1561185389\swarm_ea_1561185389.json') as json_file:  
-    data = json.load(json_file)
-    print(data[0])
-    for p in data:
-       dt_object = datetime.fromtimestamp(p['time_stamp'])
-       #print(p["dim"], p["instance"])
-       messages.append((pd.to_datetime(dt_object), 1 , p["dim"], p["instance"],  p["best_score"],  p["fopt"]))
+    chunk = pd.read_json(json_file,lines =True, chunksize = 2000  )
+    for data in chunk:
+       print('chunk')    
+       data.drop(['alg_params','evals', 'algorithm', 'best_score', 'experiment_id', 
+       'message_counter', 'message_id', 'params', 'worker_id'], axis = 1 ).to_csv('data.csv', index=False, header=False, mode='a')
+       
+
 
 #labels = ['ts','n','dim','instance','best_score','fopt']
 #sns.set(style="white", palette="muted", color_codes=True)

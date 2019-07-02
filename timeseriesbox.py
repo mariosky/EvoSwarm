@@ -15,18 +15,15 @@ from operator import itemgetter
 # 1, 2, 4, 8 workers
 file_list = [r'D:\exp_data\1561526317_1w\swarm_ea_1561526317.json', 
              r'D:\exp_data\1561558363_2w\swarm_ea_1561558363.json',
-             r'D:\exp_data\1561750813\swarm_ea_1561750813.json', 
-             r'D:\exp_data\1561757026\swarm_ea_1561757026.json'
-         #    r'D:\exp_data\1561521129_4w\swarm_ea_1561521129.json',
-         #    r'D:\exp_data\1561516494_8w\swarm_ea_1561516494.json'
+             r'D:\exp_data\1561521129_4w\swarm_ea_1561521129.json',
+             r'D:\exp_data\1561516494_8w\swarm_ea_1561516494.json'
             ]
 
 def get_data_frame(file):
-    data = pd.read_json(file )
-    data.drop([ 'alg_params','evals', 'algorithm', 'best_score', 'experiment_id', 
+    data = pd.read_json(file)
+    return data.drop([ 'alg_params','evals', 'algorithm', 'best_score', 'experiment_id', 
     'message_counter', 'message_id', 'params', 'worker_id'], axis = 1 )
-    data.time_stamp = data.time_stamp.apply(pd.to_datetime)
-    return data
+
 
 labels = ['ts','n','dim','instance','best_score','fopt']
 
@@ -40,6 +37,8 @@ pop_size = {2:'100', 3:'120',5:'120',10:'140',20:'200',40:'250' }
 
 for worker_index , file in enumerate(file_list):
     df = get_data_frame(file)
+    df.time_stamp = df.time_stamp.apply(datetime.fromtimestamp)  
+    df.time_stamp = df.time_stamp.apply(pd.to_datetime)
     for dim_index, (name, dim_group) in enumerate (df.groupby("dim")):
             #print(name)
             dim_instance = dim_group.groupby("instance").agg({'time_stamp':[np.min, np.max]})

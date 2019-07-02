@@ -24,8 +24,7 @@ def process_logs(experiment_id, list_name = "log:swarm", redis_host = 'localhost
     with open(DATA_FOLDER+experiment+'.json', 'w') as f:
         for d in data:
             f.write( json.dumps(d) +'\n')
-           #json.dump(data, f)
-
+        
 
     grp_benchmark = itemgetter("benchmark","dim")
     grp_instance = itemgetter("benchmark","instance")
