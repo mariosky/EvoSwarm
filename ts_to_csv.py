@@ -1,9 +1,9 @@
 import json
 import pandas as pd
 
-LINES = False
+LINES = True
 
-in_file = r'D:\exp_data\1561526317_1w\swarm_ea_1561526317.json'
+in_file = r'D:\exp_data\1562080407_1w_10m\swarm_ea_1562080407.json'
 out_file = None
 
 if not out_file:
