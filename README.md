@@ -1,6 +1,6 @@
-# swarm-ga-worker
+# EvoSwarm
 
-Stateless Genetic Algorithm Worker
+Stateless Multi-populatonm Algorithm in Docker containers.
 
 ## Requeriments
 
@@ -26,7 +26,7 @@ git clone https://github.com/mariosky/EvoSwarm.git
 
 ## Run the service
 
-Redis needs to be stopped before this, because it uses the same port.
+Your local Redis needs to be stopped before this, because it uses the same port.
 After `docker-compose up`, which downloads and starts the services. 
 Wait until the controller is ready:
 ```
@@ -37,12 +37,10 @@ controller_1  | pulling
 ## Execute an experiment
 
 From another terminal add or modify a json configuration file
-and add a new  experiment to the queue:
+and add a new experiment to the queue:
 ```
 python3 run_experiment.py your_conf.json 
 ```
-
-
 
 ## COCO
 
