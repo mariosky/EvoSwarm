@@ -13,7 +13,7 @@ Stateless Genetic Algorithm Worker
 
 1. Clone this repo
 ```
-git clone https://github.com/mariosky/swarm-ga-worker.git
+git clone https://github.com/mariosky/EvoSwarm.git
 ```
 2. From the root of the project:
 
