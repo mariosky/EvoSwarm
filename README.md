@@ -42,6 +42,17 @@ and add a new experiment to the queue:
 python3 run_experiment.py your_conf.json 
 ```
 
+To take down the application:
+```
+docker-compose down
+```
+
+To restart the application deleting redis data:
+```
+docker-compose up --force-recreate
+```
+
+
 ## COCO
 
 ### Run
