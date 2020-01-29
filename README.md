@@ -46,7 +46,7 @@ python3 run_experiment.py your_conf.json
 
 ### Run
 ```
-python coco_process_logs.py <EXPERIMENT_ID>
+python3 coco_process_logs.py <EXPERIMENT_ID>
 ```
 
 ### COCO Post-processing
