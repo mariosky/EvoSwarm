@@ -1,6 +1,7 @@
 import json
 import pandas as pd
 
+# First we must state if the jsonfile has lines
 LINES = True
 
 in_file = r'D:\exp_data\1562080407_1w_10m\swarm_ea_1562080407.json'

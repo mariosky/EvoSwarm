@@ -10,10 +10,10 @@ from operator import itemgetter
 
 
 # 1, 2, 4, 8 workers
-file_list = [r'D:\exp_data\1561526317_1w\swarm_ea_1561526317.json', 
-             r'D:\exp_data\1561558363_2w\swarm_ea_1561558363.json',
-             r'D:\exp_data\1561521129_4w\swarm_ea_1561521129.json',
-             r'D:\exp_data\1561516494_8w\swarm_ea_1561516494.json']
+file_list = [r'C:\F4Exp\swarm_ea_1w_5m.json',
+             r'C:\F4Exp\swarm_ea_2w_5m.json',
+             r'C:\F4Exp\swarm_ea_4w_5m.json',
+             r'C:\F4Exp\swarm_ea_8w_5m.json']
 
 labels = ['ts','n','dim','instance','evals']
 
