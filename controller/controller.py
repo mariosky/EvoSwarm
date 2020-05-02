@@ -13,7 +13,7 @@ TOPIC_PRODUCE =  ('TOPIC_PRODUCE' in os.environ and os.environ['TOPIC_PRODUCE'])
 
 WORKER_HEARTBEAT_INTERVAL = 10
 
-r = redis.StrictRedis(host='redis', port=6379, db=0)
+r = redis.StrictRedis(host=os.environ['REDIS_HOST'], port=6379, db=0)
 
 redis_ready = False 
 while not redis_ready:

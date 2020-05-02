@@ -1,0 +1,147 @@
+version: '3'
+services:
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: us-west-2
+        awslogs-group: docker-logs
+        awslogs-stream-prefix: redis
+
+  setup:
+    image: mariosky/setup
+    command: python experiment.py
+    volumes:
+      - /code
+    environment:
+      PYTHONUNBUFFERED: 1
+      REDIS_HOST: localhost
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: us-west-2
+        awslogs-group: docker-logs
+        awslogs-stream-prefix: setup
+
+  controller:
+    image: mariosky/controller
+    volumes:
+        - /code
+    command: python controller.py
+    environment:
+        PYTHONUNBUFFERED: 1
+        REDIS_HOST: localhost
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: us-west-2
+        awslogs-group: docker-logs
+        awslogs-stream-prefix: controller
+
+  worker:
+    image: mariosky/worker
+    volumes:
+      - /code
+    command: python main.py
+    environment:
+      PYTHONUNBUFFERED: 1
+      REDIS_HOST: localhost
+    logging:
+      driver: awslogs
+      options: 
+        awslogs-region: us-west-2
+        awslogs-group: docker-logs
+        awslogs-stream-prefix: worker
+
+  worker1:
+    image: mariosky/worker
+    volumes:
+      - /code
+    command: python main.py
+    environment:
+      PYTHONUNBUFFERED: 1
+      REDIS_HOST: localhost
+    logging:
+      driver: awslogs
+      options: 
+        awslogs-region: us-west-2
+        awslogs-group: docker-logs
+        awslogs-stream-prefix: worker
+
+  worker2:
+    image: mariosky/worker
+    volumes:
+      - /code
+    command: python main.py
+    environment:
+      PYTHONUNBUFFERED: 1
+      REDIS_HOST: localhost
+    logging:
+      driver: awslogs
+      options: 
+        awslogs-region: us-west-2
+        awslogs-group: docker-logs
+        awslogs-stream-prefix: worker
+        
+  worker3:
+    image: mariosky/worker
+    volumes:
+      - /code
+    command: python main.py
+    environment:
+      PYTHONUNBUFFERED: 1
+      REDIS_HOST: localhost
+    logging:
+      driver: awslogs
+      options: 
+        awslogs-region: us-west-2
+        awslogs-group: docker-logs
+        awslogs-stream-prefix: worker
+
+  worker4:
+    image: mariosky/worker
+    volumes:
+      - /code
+    command: python main.py
+    environment:
+      PYTHONUNBUFFERED: 1
+      REDIS_HOST: localhost
+    logging:
+      driver: awslogs
+      options: 
+        awslogs-region: us-west-2
+        awslogs-group: docker-logs
+        awslogs-stream-prefix: worker
+
+  worker5:
+    image: mariosky/worker
+    volumes:
+      - /code
+    command: python main.py
+    environment:
+      PYTHONUNBUFFERED: 1
+      REDIS_HOST: localhost
+    logging:
+      driver: awslogs
+      options: 
+        awslogs-region: us-west-2
+        awslogs-group: docker-logs
+        awslogs-stream-prefix: worker
+
+  worker6:
+    image: mariosky/worker
+    volumes:
+      - /code
+    command: python main.py
+    environment:
+      PYTHONUNBUFFERED: 1
+      REDIS_HOST: localhost
+    logging:
+      driver: awslogs
+      options: 
+        awslogs-region: us-west-2
+        awslogs-group: docker-logs
+        awslogs-stream-prefix: worker

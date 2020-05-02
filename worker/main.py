@@ -13,8 +13,16 @@ TOPIC_CONSUME =   "population-objects"
 TOPIC_PRODUCE =   "evolved-population-objects"
 WORKER_ID = str (uuid.uuid4())
 
-r = redis.StrictRedis(host='redis', port=6379, db=0)
-
+r = redis.StrictRedis(host=os.environ['REDIS_HOST'], port=6379, db=0)
+redis_ready = False 
+while not redis_ready:
+    try:
+        redis_ready = r.ping()
+    except:
+        print("waiting for redis")
+        time.sleep(3)
+    
+print("redis alive")
 
 
 # {'type': 'subscribe', 'pattern': None, 'channel': b'population-objects', 'data': 1}

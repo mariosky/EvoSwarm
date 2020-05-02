@@ -7,7 +7,7 @@ from itertools import groupby
 from operator import itemgetter
  
 
-def process_logs(experiment_id, list_name = "log:swarm", redis_host = 'localhost', redis_port = 6379):
+def process_logs(experiment_id, redis_host = 'localhost', list_name = "log:swarm", redis_port = 6379):
     r = redis.Redis(host=redis_host, port=redis_port)
 
     DATA_FOLDER = './experiment_data/' + str(experiment_id) + '/'
@@ -131,4 +131,11 @@ def process_logs(experiment_id, list_name = "log:swarm", redis_host = 'localhost
     return DATA_FOLDER
 
 if __name__ == "__main__":
-    process_logs(sys.argv[1])
+    import argparse
+    parser = argparse.ArgumentParser(description='Proecess experiment logs from Redis')
+    parser.add_argument('experiment_id', help='Experiment ID')
+    parser.add_argument('--host', default='localhost', help='Redis Host. Default is localhost')
+    args = parser.parse_args()
+    print('This can take a few seconds')
+    process_logs(args.experiment_id,args.host)
+    
