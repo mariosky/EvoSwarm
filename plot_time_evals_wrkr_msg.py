@@ -68,13 +68,25 @@ def plot_as_column(col, box_dimensions):
         ax.boxplot(box_dimensions[dim], sym='',  labels=worker_labels)
         #if col == 0:
         #    ax.set_ylabel(r"#FE/s" , fontsize=9)
-        
+
+def to_csv(data, file_name):
+    for d in dimension_list:
+        for i, worker in enumerate(worker_labels):
+            df = pd.DataFrame(data[d][i])
+            df['worker'] = worker
+            df['dim'] = str(d)
+            print(df.columns)
+            df.to_csv(file_name, mode = 'a', header=False, columns=['dim','worker','sum'])
+
+to_csv(get_box_dimensions(file_list_5m), '5m.csv')
+to_csv(get_box_dimensions(file_list_10m),'10m.csv' )
+
+
+
+
+
 
 plot_as_column(0, get_box_dimensions(file_list_5m))
 plot_as_column(1, get_box_dimensions(file_list_10m))
-#print(get_box_dimensions(file_list_5m))
 
-#plt.subplots_adjust(left=0.11, bottom=0.11, right=0.95, top=0.88, wspace=0.39, hspace=0.70)
-
-#plt.savefig('foo.pdf')
 plt.show()
