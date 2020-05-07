@@ -45,12 +45,10 @@ def get_box_dimensions(file_list):
                 dim_instance = dim_group.groupby("instance").agg({'time_stamp':[np.min, np.max],'num_evals':np.sum})
                 dim_instance.columns = dim_instance.columns.droplevel(level=0)
 
-                num_evals = dim_instance['sum']
+                #num_evals = dim_instance['sum']
                 time_diff_raw = dim_instance.amax-dim_instance.amin
                 time_diff_total = list(map(lambda x: x.total_seconds(), time_diff_raw))
-
-                evals_per_second = num_evals/time_diff_total
-                box_dimensions[name].append(evals_per_second)
+                box_dimensions[name].append(time_diff_total)
     return box_dimensions
 
 
@@ -75,11 +73,11 @@ def to_csv(data, file_name):
             df = pd.DataFrame(data[d][i])
             df['worker'] = worker
             df['dim'] = str(d)
-            print(df.columns)
-            df.to_csv(file_name, mode = 'a', header=False, columns=['dim','worker','sum'])
+            df['time'] = df[0]
+            df.to_csv(file_name, mode = 'a', header=False, columns=['dim','worker','time'])
 
-to_csv(get_box_dimensions(file_list_5m), '5m.csv')
-to_csv(get_box_dimensions(file_list_10m),'10m.csv' )
+to_csv(get_box_dimensions(file_list_5m), 'time_5m.csv')
+to_csv(get_box_dimensions(file_list_10m),'time_10m.csv' )
 
 
 

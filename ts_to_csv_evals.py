@@ -2,9 +2,9 @@ import json
 import pandas as pd
 
 # First we must state if the jsonfile has lines
-LINES = False
+LINES = True
 
-in_file = r'C:\F4Exp\swarm_ea_8w_5m.json'
+in_file = r'C:\speed_F4_30_instances\swarm_ea_aws.json'
 out_file = None
 
 

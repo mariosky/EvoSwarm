@@ -46,11 +46,11 @@ def get_box_dimensions(file_list):
                 dim_instance.columns = dim_instance.columns.droplevel(level=0)
 
                 num_evals = dim_instance['sum']
-                time_diff_raw = dim_instance.amax-dim_instance.amin
-                time_diff_total = list(map(lambda x: x.total_seconds(), time_diff_raw))
+                #time_diff_raw = dim_instance.amax-dim_instance.amin
+                #time_diff_total = list(map(lambda x: x.total_seconds(), time_diff_raw))
 
-                evals_per_second = num_evals/time_diff_total
-                box_dimensions[name].append(evals_per_second)
+                #evals_per_second = num_evals/time_diff_total
+                box_dimensions[name].append(num_evals)
     return box_dimensions
 
 
@@ -78,8 +78,8 @@ def to_csv(data, file_name):
             print(df.columns)
             df.to_csv(file_name, mode = 'a', header=False, columns=['dim','worker','sum'])
 
-to_csv(get_box_dimensions(file_list_5m), '5m.csv')
-to_csv(get_box_dimensions(file_list_10m),'10m.csv' )
+to_csv(get_box_dimensions(file_list_5m), 'evals_5m.csv')
+to_csv(get_box_dimensions(file_list_10m),'evals_10m.csv' )
 
 
 
