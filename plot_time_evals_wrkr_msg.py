@@ -39,7 +39,7 @@ def get_box_dimensions(file_list):
     box_dimensions = {2:[], 3:[], 5:[], 10:[], 20:[], 40:[]}
     for worker_index , file in enumerate(file_list):
         df = get_data_frame(file)
-        df.time_stamp = df.time_stamp.apply(datetime.fromtimestamp)  
+        df.time_stamp = df.time_stamp.apply(datetime.fromtimestamp)
         df.time_stamp = df.time_stamp.apply(pd.to_datetime)
         for dim_index, (name, dim_group) in enumerate (df.groupby("dim")):
                 dim_instance = dim_group.groupby("instance").agg({'time_stamp':[np.min, np.max],'num_evals':np.sum})

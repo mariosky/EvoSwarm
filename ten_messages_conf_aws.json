@@ -9,8 +9,8 @@
       "40":{ "NGEN":80, "POP_SIZE": 125, "MAX_ITERATIONS":40, "MESSAGES_PSO":0, "MESSAGES_GA":10 }
     },
     "GA_WORKER_RATIO" : 0.5,
-    "FUNCTIONS": [1,2,3,4],
-    "DIMENSIONS" : [2, 3, 5, 10, 20, 40],
+    "FUNCTIONS": [4],
+    "DIMENSIONS" : [10, 20],
     "CXPB_RND": [0.2, 0.6],
     "MUTPB_RND": [0.1, 0.3]
 }

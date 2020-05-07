@@ -5,27 +5,6 @@ services:
     ports:
       - "6379:6379"
 
-  worker:
-    build: './worker'
-    depends_on:
-      - redis
-    volumes:
-      - ./worker:/code
-    command: python main.py
-    environment:
-      PYTHONUNBUFFERED: 1
-      REDIS_HOST: redis
-  worker2:
-    build: './worker'
-    depends_on:
-      - redis
-    volumes:
-      - ./worker:/code
-    command: python main.py
-    environment:
-      PYTHONUNBUFFERED: 1
-      REDIS_HOST: redis
-
   setup:
     build: './setup'
     depends_on:
@@ -47,6 +26,95 @@ services:
     environment:
       PYTHONUNBUFFERED: 1
       REDIS_HOST: redis
+
+
+  worker:
+    build: './worker'
+    depends_on:
+      - redis
+    volumes:
+      - ./worker:/code
+    command: python main.py
+    environment:
+      PYTHONUNBUFFERED: 1
+      REDIS_HOST: redis
+
+  worker1:
+    build: './worker'
+    depends_on:
+      - redis
+    volumes:
+      - ./worker:/code
+    command: python main.py
+    environment:
+      PYTHONUNBUFFERED: 1
+      REDIS_HOST: redis
+  worker2:
+    build: './worker'
+    depends_on:
+      - redis
+    volumes:
+      - ./worker:/code
+    command: python main.py
+    environment:
+      PYTHONUNBUFFERED: 1
+      REDIS_HOST: redis
+  worker3:
+    build: './worker'
+    depends_on:
+      - redis
+    volumes:
+      - ./worker:/code
+    command: python main.py
+    environment:
+      PYTHONUNBUFFERED: 1
+      REDIS_HOST: redis
+  
+  worker4:
+    build: './worker'
+    depends_on:
+      - redis
+    volumes:
+      - ./worker:/code
+    command: python main.py
+    environment:
+      PYTHONUNBUFFERED: 1
+      REDIS_HOST: redis
+  worker5:
+    build: './worker'
+    depends_on:
+      - redis
+    volumes:
+      - ./worker:/code
+    command: python main.py
+    environment:
+      PYTHONUNBUFFERED: 1
+      REDIS_HOST: redis
+  worker6:
+    build: './worker'
+    depends_on:
+      - redis
+    volumes:
+      - ./worker:/code
+    command: python main.py
+    environment:
+      PYTHONUNBUFFERED: 1
+      REDIS_HOST: redis
+  worker7:
+    build: './worker'
+    depends_on:
+      - redis
+    volumes:
+      - ./worker:/code
+    command: python main.py
+    environment:
+      PYTHONUNBUFFERED: 1
+      REDIS_HOST: redis
+
+
+
+  
+
   
   # elasticsearch:
   #   labels:
