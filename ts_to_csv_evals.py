@@ -4,7 +4,7 @@ import pandas as pd
 # First we must state if the jsonfile has lines
 LINES = True
 
-in_file = r'C:\speed_F4_30_instances\swarm_ea_aws.json'
+in_file = r'C:\F4_30\aws_8\swarm_ea_aws.json'
 out_file = None
 
 

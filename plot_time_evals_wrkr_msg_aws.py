@@ -15,9 +15,9 @@ from operator import itemgetter
 
 # 1, 2, 4, 8 workers
 # For now these files are fixed 
-file_list_5m = [ r'C:\F4Exp\30\swarm_ea_aws.csv']
+file_list_5m = [ r'C:\F4_30\swarm_ea_aws.csv']
 
-file_list_10m = [r'C:\F4Exp\30\swarm_ea_8w10m15i.csv']
+file_list_10m = [r'C:\F4_30\swarm_ea_8w10m15i.csv']
 
 def get_data_frame(file):
     data = pd.read_csv(file, header=None, names=['dim', 'instance', 'time_stamp', 'num_evals'] )
