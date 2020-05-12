@@ -8,7 +8,7 @@ services:
     command: python main.py
     environment:
       PYTHONUNBUFFERED: 1
-      REDIS_HOST: 34.215.129.63
+      REDIS_HOST: 54.149.107.2
     logging:
       driver: awslogs
       options: 
