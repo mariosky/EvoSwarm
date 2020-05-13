@@ -18,7 +18,7 @@ from operator import itemgetter
 file_list_5m = [r'C:\F4_30\swarm_ea_1w5m.csv',
                 r'C:\F4_30\swarm_ea_2w5m.csv',
                 r'C:\F4_30\swarm_ea_4w5m.csv',
-                r'C:\F4_30\swarm_ea_8w10m.csv']
+                r'C:\F4_30\swarm_ea_8w5m.csv']
 
 file_list_10m = [ r'C:\F4_30\swarm_ea_1w10m.csv',
                   r'C:\F4_30\swarm_ea_2w10m.csv',
@@ -39,18 +39,16 @@ def get_box_dimensions(file_list):
     box_dimensions = {2:[], 3:[], 5:[], 10:[], 20:[], 40:[]}
     for worker_index , file in enumerate(file_list):
         df = get_data_frame(file)
-        df.time_stamp = df.time_stamp.apply(datetime.fromtimestamp)
+        df.time_stamp = df.time_stamp.apply(datetime.fromtimestamp)  
         df.time_stamp = df.time_stamp.apply(pd.to_datetime)
         for dim_index, (name, dim_group) in enumerate (df.groupby("dim")):
                 dim_instance = dim_group.groupby("instance").agg({'time_stamp':[np.min, np.max],'num_evals':np.sum})
                 dim_instance.columns = dim_instance.columns.droplevel(level=0)
 
-                num_evals = dim_instance['sum']
+                #num_evals = dim_instance['sum']
                 time_diff_raw = dim_instance.amax-dim_instance.amin
                 time_diff_total = list(map(lambda x: x.total_seconds(), time_diff_raw))
-
-                evals_per_second = num_evals/time_diff_total
-                box_dimensions[name].append(evals_per_second)
+                box_dimensions[name].append(time_diff_total)
     return box_dimensions
 
 
@@ -75,11 +73,11 @@ def to_csv(data, file_name):
             df = pd.DataFrame(data[d][i])
             df['worker'] = worker
             df['dim'] = str(d)
-            print(df.columns)
-            df.to_csv(file_name, mode = 'a', header=False, columns=['dim','worker','sum'])
+            df['time'] = df[0]
+            df.to_csv(file_name, mode = 'a', header=False, columns=['dim','worker','time'])
 
-to_csv(get_box_dimensions(file_list_5m), '5m.csv')
-to_csv(get_box_dimensions(file_list_10m),'10m.csv' )
+to_csv(get_box_dimensions(file_list_5m), '../time_5m.csv')
+to_csv(get_box_dimensions(file_list_10m), '../time_10m.csv')
 
 
 
