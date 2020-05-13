@@ -18,7 +18,7 @@ from operator import itemgetter
 file_list_5m = [r'C:\F4_30\swarm_ea_1w5m.csv',
                 r'C:\F4_30\swarm_ea_2w5m.csv',
                 r'C:\F4_30\swarm_ea_4w5m.csv',
-                r'C:\F4_30\swarm_ea_8w10m.csv']
+                r'C:\F4_30\swarm_ea_8w5m.csv']
 
 file_list_10m = [ r'C:\F4_30\swarm_ea_1w10m.csv',
                   r'C:\F4_30\swarm_ea_2w10m.csv',
