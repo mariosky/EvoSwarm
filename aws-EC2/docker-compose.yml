@@ -1,0 +1,43 @@
+version: '3'
+services:
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: us-west-2
+        awslogs-group: docker-logs
+        awslogs-stream-prefix: redis
+
+  setup:
+    image: mariosky/setup
+    command: python experiment.py
+    volumes:
+      - /code
+    environment:
+      PYTHONUNBUFFERED: 1
+      REDIS_HOST: localhost
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: us-west-2
+        awslogs-group: docker-logs
+        awslogs-stream-prefix: setup
+
+  controller:
+    image: mariosky/controller
+    volumes:
+        - /code
+    command: python controller.py
+    environment:
+        PYTHONUNBUFFERED: 1
+        REDIS_HOST: localhost
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: us-west-2
+        awslogs-group: docker-logs
+        awslogs-stream-prefix: controller
+

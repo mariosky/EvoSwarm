@@ -1,0 +1,38 @@
+version: 1
+task_definition:
+  ecs_network_mode: awsvpc
+  services:
+    worker01:
+      mem_limit: 134217728
+      cpu_shares: 1024
+    worker02:
+      mem_limit: 134217728
+      cpu_shares: 1024
+#    worker03:
+#     mem_limit: 134217728
+#      cpu_shares: 1024
+#    worker04:
+#      mem_limit: 134217728
+#      cpu_shares: 1024
+#    worker05:
+#      mem_limit: 134217728
+#      cpu_shares: 1024
+#    worker06:
+#      mem_limit: 134217728
+#      cpu_shares: 1024
+#    worker07:
+#      mem_limit: 134217728
+#      cpu_shares: 1024
+#    worker08:
+#      mem_limit: 134217728
+#      cpu_shares: 1024   
+      
+run_params:
+  network_configuration:
+    awsvpc_configuration:
+      subnets:
+        - "subnet-0ca2a542bbd74239e"
+        - "subnet-0dfd367b5ca531b07"
+      security_groups:
+        - "sg-0681c18469874b391"
+

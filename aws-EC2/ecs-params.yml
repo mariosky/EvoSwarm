@@ -1,0 +1,23 @@
+version: 1
+task_definition:
+  ecs_network_mode: awsvpc
+  services:
+    redis:
+      mem_limit: 134217728
+      cpu_shares: 1024
+    setup:
+      mem_limit: 134217728
+      cpu_shares: 128
+    controller:
+      mem_limit: 134217728
+      cpu_shares: 896
+run_params:
+  network_configuration:
+    awsvpc_configuration:
+      subnets:
+        - "subnet-0ca2a542bbd74239e"
+        - "subnet-0dfd367b5ca531b07"
+      security_groups:
+        - "sg-0681c18469874b391"
+#assign_public_ip: ENABLED
+  
