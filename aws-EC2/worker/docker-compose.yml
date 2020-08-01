@@ -1,29 +1,14 @@
 version: '3'
 services:
 
-  worker01:
+  worker:
     image: mariosky/worker
     volumes:
       - /code
     command: python main.py
     environment:
       PYTHONUNBUFFERED: 1
-      REDIS_HOST: 10.0.0.149
-    logging:
-      driver: awslogs
-      options: 
-        awslogs-region: us-west-2
-        awslogs-group: docker-logs
-        awslogs-stream-prefix: worker
-
-  worker02:
-    image: mariosky/worker
-    volumes:
-      - /code
-    command: python main.py
-    environment:
-      PYTHONUNBUFFERED: 1
-      REDIS_HOST: 54.149.107.2
+      REDIS_HOST: 10.0.1.87
     logging:
       driver: awslogs
       options: 

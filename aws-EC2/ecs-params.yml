@@ -2,10 +2,10 @@ version: 1
 task_definition:
   ecs_network_mode: awsvpc
   services:
-    redis:
-      mem_limit: 134217728
+    redis:         
+      mem_limit: 2147483648
       cpu_shares: 1024
-    setup:
+    setup: 
       mem_limit: 134217728
       cpu_shares: 128
     controller:

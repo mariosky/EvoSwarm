@@ -2,12 +2,10 @@ version: 1
 task_definition:
   ecs_network_mode: awsvpc
   services:
-    worker01:
-      mem_limit: 134217728
-      cpu_shares: 1024
-    worker02:
-      mem_limit: 134217728
-      cpu_shares: 1024
+    worker:
+      mem_limit: 534217728
+      cpu_shares: 2048
+
 #    worker03:
 #     mem_limit: 134217728
 #      cpu_shares: 1024

@@ -9,6 +9,8 @@ import argparse
 parser = argparse.ArgumentParser(description='Execute experiment in EvoSwarm')
 parser.add_argument('--file', default='default_conf.json', help='Configuration file')
 parser.add_argument('--host', default='localhost', help='Redis Host. Default is localhost')
+parser.add_argument('--instances', default=15, help='How many instances of the experiment are needed')
+
 args = parser.parse_args()
 print(args.file)
 print(args.host)
@@ -27,9 +29,7 @@ with open(configuration,"r") as conf:
     configuration_data = json.load(conf)
 
 configuration_data['EXPERIMENT_ID'] = str(id)
-configuration_data['INSTANCES'] = []
-for i in range(15):
-    configuration_data['INSTANCES'].append(i+1)
+configuration_data['INSTANCES'] = list(range(1,int(args.instances)+1))
     
 print(configuration_data)
 
