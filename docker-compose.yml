@@ -49,7 +49,69 @@ services:
     environment:
       PYTHONUNBUFFERED: 1
       REDIS_HOST: redis
-  # worker2:
+  worker2:
+    build: './worker'
+    depends_on:
+      - redis
+    volumes:
+      - ./worker:/code
+    command: python main.py
+    environment:
+      PYTHONUNBUFFERED: 1
+      REDIS_HOST: redis
+  worker3:
+    build: './worker'
+    depends_on:
+      - redis
+    volumes:
+      - ./worker:/code
+    command: python main.py
+    environment:
+      PYTHONUNBUFFERED: 1
+      REDIS_HOST: redis
+  
+  worker4:
+    build: './worker'
+    depends_on:
+      - redis
+    volumes:
+      - ./worker:/code
+    command: python main.py
+    environment:
+      PYTHONUNBUFFERED: 1
+      REDIS_HOST: redis
+  worker5:
+    build: './worker'
+    depends_on:
+      - redis
+    volumes:
+      - ./worker:/code
+    command: python main.py
+    environment:
+      PYTHONUNBUFFERED: 1
+      REDIS_HOST: redis
+  worker6:
+    build: './worker'
+    depends_on:
+      - redis
+    volumes:
+      - ./worker:/code
+    command: python main.py
+    environment:
+      PYTHONUNBUFFERED: 1
+      REDIS_HOST: redis
+  worker7:
+    build: './worker'
+    depends_on:
+      - redis
+    volumes:
+      - ./worker:/code
+    command: python main.py
+    environment:
+      PYTHONUNBUFFERED: 1
+      REDIS_HOST: redis
+
+  # worker8:
   #   build: './worker'
   #   depends_on:
   #     - redis
@@ -59,7 +121,28 @@ services:
   #   environment:
   #     PYTHONUNBUFFERED: 1
   #     REDIS_HOST: redis
-  # worker3:
+
+  # worker9:
+  #   build: './worker'
+  #   depends_on:
+  #     - redis
+  #   volumes:
+  #     - ./worker:/code
+  #   command: python main.py
+  #   environment:
+  #     PYTHONUNBUFFERED: 1
+  #     REDIS_HOST: redis
+  # worker10:
+  #   build: './worker'
+  #   depends_on:
+  #     - redis
+  #   volumes:
+  #     - ./worker:/code
+  #   command: python main.py
+  #   environment:
+  #     PYTHONUNBUFFERED: 1
+  #     REDIS_HOST: redis
+  # worker11:
   #   build: './worker'
   #   depends_on:
   #     - redis
@@ -70,7 +153,7 @@ services:
   #     PYTHONUNBUFFERED: 1
   #     REDIS_HOST: redis
   
-  # worker4:
+  # worker12:
   #   build: './worker'
   #   depends_on:
   #     - redis
@@ -80,7 +163,7 @@ services:
   #   environment:
   #     PYTHONUNBUFFERED: 1
   #     REDIS_HOST: redis
-  # worker5:
+  # worker13:
   #   build: './worker'
   #   depends_on:
   #     - redis
@@ -90,7 +173,7 @@ services:
   #   environment:
   #     PYTHONUNBUFFERED: 1
   #     REDIS_HOST: redis
-  # worker6:
+  # worker14:
   #   build: './worker'
   #   depends_on:
   #     - redis
@@ -100,7 +183,7 @@ services:
   #   environment:
   #     PYTHONUNBUFFERED: 1
   #     REDIS_HOST: redis
-  # worker7:
+  # worker15:
   #   build: './worker'
   #   depends_on:
   #     - redis
@@ -110,8 +193,6 @@ services:
   #   environment:
   #     PYTHONUNBUFFERED: 1
   #     REDIS_HOST: redis
-
-
 
   
 
