@@ -1,4 +1,4 @@
-{
+       {
     "DIM_CONFIGURATION" : 
     {
       "10":{ "NGEN":50, "POP_SIZE": 70, "MAX_ITERATIONS":60, "MESSAGES_PSO":0, "MESSAGES_GA":5 },

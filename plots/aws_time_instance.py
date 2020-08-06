@@ -10,31 +10,30 @@ import seaborn as sns
 from datetime import datetime
 from itertools import groupby
 from operator import itemgetter
-
+import matplotlib.ticker as mticker
 
 
 # 1, 2, 4, 8 workers
-# For now these files are fixed 
+# For now these files are fixed
+
 file_list_5m =  [
-                r'C:\Users\mario\EC2_experiment_data\ExperimentosAWS-2048\1w05mEC2.csv',
-                r'C:\Users\mario\EC2_experiment_data\ExperimentosAWS-2048\4w05mEC2.csv',
-                r'C:\Users\mario\EC2_experiment_data\ExperimentosAWS-2048\8w05mEC2.csv',
-                r'C:\Users\mario\EC2_experiment_data\ExperimentosAWS-2048\16w05mEC2.csv',
+                r'/Users/mario/Desktop/experiments/1w05mEC2.csv',
+                r'/Users/mario/Desktop/experiments/4w05mEC2.csv',
+                r'/Users/mario/Desktop/experiments/8w05mEC2.csv',
+                r'/Users/mario/Desktop/experiments/16w05mEC2.csv',
 ]
 
-
-file_list_10m = [r'C:\Users\mario\EC2_experiment_data\ExperimentosAWS-2048\1w10mEC2.csv',
-                r'C:\Users\mario\EC2_experiment_data\ExperimentosAWS-2048\4w10mEC2.csv',
-                r'C:\Users\mario\EC2_experiment_data\ExperimentosAWS-2048\8w10mEC2.csv',
-                r'C:\Users\mario\EC2_experiment_data\ExperimentosAWS-2048\16w10mEC2.csv',
+file_list_10m = [r'/Users/mario/Desktop/experiments/1w10mEC2.csv',
+                r'/Users/mario/Desktop/experiments/4w10mEC2.csv',
+                r'/Users/mario/Desktop/experiments/8w10mEC2.csv',
+                r'/Users/mario/Desktop/experiments/16w10mEC2.csv',
 ]
-
 
 file_list_20m =  [
-                r'C:\Users\mario\EC2_experiment_data\ExperimentosAWS-2048\1w20mEC2.csv',
-                r'C:\Users\mario\EC2_experiment_data\ExperimentosAWS-2048\4w20mEC2.csv',
-                r'C:\Users\mario\EC2_experiment_data\ExperimentosAWS-2048\8w20mEC2.csv',
-                r'C:\Users\mario\EC2_experiment_data\ExperimentosAWS-2048\16w20mEC2.csv',
+                r'/Users/mario/Desktop/experiments/1w20mEC2.csv',
+                r'/Users/mario/Desktop/experiments/4w20mEC2.csv',
+                r'/Users/mario/Desktop/experiments/8w20mEC2.csv',
+                r'/Users/mario/Desktop/experiments/16w20mEC2.csv',
 ]
 
 
@@ -81,7 +80,9 @@ def plot_as_row(row, box_dimensions):
 def plot_as_column(col, box_dimensions):
     for index , dim in enumerate(dimension_list):
         ax = axes[index, col]
-        ax.grid(True) 
+        ax.grid(True)
+        ax.set_yscale('log')
+        ax.yaxis.set_major_formatter(mticker.ScalarFormatter())
         if col == 0:
             ax.set_title("{0}D ({1})".format(dim, pop_size[dim]))
         ax.boxplot(box_dimensions[dim], sym='',  labels=worker_labels)

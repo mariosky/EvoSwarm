@@ -4,7 +4,7 @@ task_definition:
   services:
     worker:
       #mem_limit: 534217728
-      cpu_shares: 4096
+      cpu_shares: 2048
 
 #    worker03:
 #     mem_limit: 134217728
