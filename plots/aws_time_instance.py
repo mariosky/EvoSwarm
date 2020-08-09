@@ -17,23 +17,26 @@ import matplotlib.ticker as mticker
 # For now these files are fixed
 
 file_list_5m =  [
-                r'/Users/mario/Desktop/experiments/1w05mEC2.csv',
-                r'/Users/mario/Desktop/experiments/4w05mEC2.csv',
-                r'/Users/mario/Desktop/experiments/8w05mEC2.csv',
-                r'/Users/mario/Desktop/experiments/16w05mEC2.csv',
+                r'/Users/mario/Desktop/newex/1w05mEC2.csv',
+                r'/Users/mario/Desktop/newex/2w05mEC2.csv',
+                r'/Users/mario/Desktop/newex/4w05mEC2.csv',
+                r'/Users/mario/Desktop/newex/8w05mEC2.csv',
+                r'/Users/mario/Desktop/newex/16w05mEC2.csv',
 ]
 
-file_list_10m = [r'/Users/mario/Desktop/experiments/1w10mEC2.csv',
-                r'/Users/mario/Desktop/experiments/4w10mEC2.csv',
-                r'/Users/mario/Desktop/experiments/8w10mEC2.csv',
-                r'/Users/mario/Desktop/experiments/16w10mEC2.csv',
+file_list_10m = [r'/Users/mario/Desktop/newex/1w10mEC2.csv',
+                r'/Users/mario/Desktop/newex/2w10mEC2.csv',
+                r'/Users/mario/Desktop/newex/4w10mEC2.csv',
+                r'/Users/mario/Desktop/newex/8w10mEC2.csv',
+                r'/Users/mario/Desktop/newex/16w10mEC2.csv',
 ]
 
 file_list_20m =  [
-                r'/Users/mario/Desktop/experiments/1w20mEC2.csv',
-                r'/Users/mario/Desktop/experiments/4w20mEC2.csv',
-                r'/Users/mario/Desktop/experiments/8w20mEC2.csv',
-                r'/Users/mario/Desktop/experiments/16w20mEC2.csv',
+                r'/Users/mario/Desktop/newex/1w20mEC2.csv',
+                r'/Users/mario/Desktop/newex/2w20mEC2.csv',
+                r'/Users/mario/Desktop/newex/4w20mEC2.csv',
+                r'/Users/mario/Desktop/newex/8w20mEC2.csv',
+                r'/Users/mario/Desktop/newex/16w20mEC2.csv',
 ]
 
 
@@ -43,7 +46,7 @@ def get_data_frame(file):
 
 
 resample_step = {10:'30S',20:'60S'}
-worker_labels = [ "1w",  "4w",  "8w", "16w"]
+worker_labels = [ "1w", "2", "4w",  "8w", "16w"]
 
 pop_size = {10:'140',20:'200' }
 

@@ -4,7 +4,7 @@ import pandas as pd
 # First we must state if the jsonfile has lines
 LINES = True
 
-in_file = r'/Users/mario/Desktop/experiments/2w05mEC2.json'
+in_file = r'/Users/mario/Desktop/newex/2w10mEC2.json'
 out_file = None
 
 
