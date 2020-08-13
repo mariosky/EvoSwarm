@@ -16,28 +16,31 @@ import matplotlib.ticker as mticker
 # 1, 2, 4, 8 workers
 # For now these files are fixed
 
+#root = r'/Users/mario/Desktop/newex/'
+root = r'C:\Users\mario\Desktop\newex\\'
 file_list_5m =  [
-                r'/Users/mario/Desktop/newex/1w05mEC2.csv',
-                r'/Users/mario/Desktop/newex/2w05mEC2.csv',
-                r'/Users/mario/Desktop/newex/4w05mEC2.csv',
-                r'/Users/mario/Desktop/newex/8w05mEC2.csv',
-                r'/Users/mario/Desktop/newex/16w05mEC2.csv',
+                root + r'1w05mEC2.csv',
+                root + r'2w05mEC2.csv',
+                root + r'4w05mEC2.csv',
+                root + r'8w05mEC2.csv',
+                root + r'16w05mEC2.csv',
 ]
 
-file_list_10m = [r'/Users/mario/Desktop/newex/1w10mEC2.csv',
-                r'/Users/mario/Desktop/newex/2w10mEC2.csv',
-                r'/Users/mario/Desktop/newex/4w10mEC2.csv',
-                r'/Users/mario/Desktop/newex/8w10mEC2.csv',
-                r'/Users/mario/Desktop/newex/16w10mEC2.csv',
+file_list_10m = [root + r'1w10mEC2.csv',
+                root + r'2w10mEC2.csv',
+                root + r'4w10mEC2.csv',
+                root + r'8w10mEC2.csv',
+                root + r'16w10mEC2.csv',
 ]
 
 file_list_20m =  [
-                r'/Users/mario/Desktop/newex/1w20mEC2.csv',
-                r'/Users/mario/Desktop/newex/2w20mEC2.csv',
-                r'/Users/mario/Desktop/newex/4w20mEC2.csv',
-                r'/Users/mario/Desktop/newex/8w20mEC2.csv',
-                r'/Users/mario/Desktop/newex/16w20mEC2.csv',
+                root + r'1w20mEC2.csv',
+                root + r'2w20mEC2.csv',
+                root + r'4w20mEC2.csv',
+                root + r'8w20mEC2.csv',
+                root + r'16w20mEC2.csv',
 ]
+
 
 
 def get_data_frame(file):
