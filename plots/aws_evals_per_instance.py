@@ -94,7 +94,7 @@ def to_csv(data, file_name):
 
 to_csv(get_box_dimensions(file_list_5m), '../evals_5m.csv')
 to_csv(get_box_dimensions(file_list_10m), '../evals_10m.csv')
-to_csv(get_box_dimensions(file_list_10m), '../evals_20m.csv')
+to_csv(get_box_dimensions(file_list_20m), '../evals_20m.csv')
 
 
 

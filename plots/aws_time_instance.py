@@ -46,7 +46,7 @@ def get_data_frame(file):
 
 
 resample_step = {10:'30S',20:'60S'}
-worker_labels = [ "1w", "2", "4w",  "8w", "16w"]
+worker_labels = [ "1w", "2w", "4w",  "8w", "16w"]
 
 pop_size = {10:'140',20:'200' }
 
@@ -92,10 +92,26 @@ def plot_as_column(col, box_dimensions):
         if index == 0:
             ax.set_ylabel("seconds per instance" )
         
+def to_csv(data, file_name):
+    for d in dimension_list:
+        for i, worker in enumerate(worker_labels):
+            df = pd.DataFrame(data[d][i])
+            print(d,i, worker)
+            print(df)
+            df['worker'] = worker
+            df['dim'] = str(d)
+            print(df.columns)
+            df.to_csv(file_name, mode = 'a', header=False)#, columns=['dim','worker','time'])
+
 
 plot_as_column(0, get_box_dimensions(file_list_5m))
 plot_as_column(1, get_box_dimensions(file_list_10m))
 plot_as_column(2, get_box_dimensions(file_list_20m))
+
+to_csv(get_box_dimensions( file_list_5m), '../time_5m.csv')
+to_csv(get_box_dimensions( file_list_10m), '../time_10m.csv')
+to_csv(get_box_dimensions( file_list_20m), '../time_20m.csv')
+
 
 
 plt.subplots_adjust(left=0.08, bottom=0.11, right=0.90, top=0.88, wspace=0.39, hspace=0.5)
