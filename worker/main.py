@@ -59,6 +59,7 @@ while True:
 
        
        # Return with a format for writing to MessageHub
+        #print(result['population'])
         data = json.dumps(result).encode('utf-8')
         print("New POPULATION Message")
         #r.publish(TOPIC_PRODUCE, data)

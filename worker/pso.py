@@ -30,6 +30,7 @@ class solution:
         self.dim=0
         self.popnum=0
         self.maxiers=0
+        self.fitness = None
 
 
 
@@ -39,6 +40,7 @@ def PSO(objf, dim, iters, pos, Vmax = 6, wMax = 0.9, wMin = 0.2, c1=2, c2 = 2, f
 
     s=solution()
     PopSize = len(pos)
+
     
     
     ######################## Initializations
@@ -104,5 +106,5 @@ def PSO(objf, dim, iters, pos, Vmax = 6, wMax = 0.9, wMin = 0.2, c1=2, c2 = 2, f
     s.executionTime=timerEnd-timerStart
     s.convergence=list(convergence_curve)
     s.pop = list(pos)
-
+    s.fitness = pBestScore
     return s

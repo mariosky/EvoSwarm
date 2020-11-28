@@ -1,0 +1,11 @@
+{
+    "DIM_CONFIGURATION" :
+    {
+        "10":{ "NGEN":50, "POP_SIZE": 100, "MAX_ITERATIONS":25, "MESSAGES_PSO":0, "MESSAGES_GA":8 }
+    },
+    "GA_WORKER_RATIO" : 0.5,
+    "FUNCTIONS": [4],
+    "DIMENSIONS" : [10],
+    "CXPB_RND": [0.2, 0.6],
+    "MUTPB_RND": [0.1, 0.3]
+}

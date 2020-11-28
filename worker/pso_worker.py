@@ -23,10 +23,12 @@ class PSO_Worker:
         solution =  pso.PSO(objf=self.function, dim=self.conf['problem']['dim'],
             iters=self.conf['params']['PSO']['iterations'], pos=pop, Vmax=self.conf['params']['PSO']['Vmax'],
             wMax=self.conf['params']['PSO']['wMax'], wMin=self.conf['params']['PSO']['wMin'],   fopt=self.function.getfopt())
-        final_pop = [{"chromosome": tuple(ind), "id": None,
-                      "fitness": {"DefaultContext": 0, "score": 0}} for ind in
-                     solution.pop]
 
+
+        final_pop = [{"chromosome": tuple(ind), "id": None,
+                      "fitness": {"DefaultContext": 0, "score": solution.fitness[i]}} for i, ind in
+                     enumerate(solution.pop)]
+        
         self.conf.update({'iterations': solution.convergence, 'population': final_pop, 'best_individual': solution.best ,
                           'fopt': self.function.getfopt(), 'best_score':solution.bestScore})
 

@@ -40,8 +40,6 @@ def new_populations(env,conf ,number_of_pops, n_individuals, dim, lb, ub ):
             new_env["algorithm"] = "GA"
         new_env['params']['GA']['crossover']['CXPB']  = random.uniform(conf['CXPB_RND'][0],conf['CXPB_RND'][1])
         new_env['params']['GA']['mutation']['MUTPB']  = random.uniform(conf['MUTPB_RND'][0],conf['MUTPB_RND'][1])
-        
-        
         message_list.append(new_env)
     return message_list
 
