@@ -47,7 +47,8 @@ def PSO(objf, dim, iters, pos, Vmax = 6, wMax = 0.9, wMin = 0.2, c1=2, c2 = 2, f
     
     vel=numpy.zeros((PopSize,dim))
     
-    pBestScore=numpy.zeros(PopSize) 
+    pBestScore=numpy.zeros(PopSize)
+    pFitness = numpy.zeros(PopSize)
     pBestScore.fill(float("inf"))
     
     pBest=numpy.zeros((PopSize,dim))
@@ -67,6 +68,7 @@ def PSO(objf, dim, iters, pos, Vmax = 6, wMax = 0.9, wMin = 0.2, c1=2, c2 = 2, f
             pos[i,:]=numpy.clip(pos[i,:], -5, 5)
             #Calculate objective function for each particle
             fitness=objf(pos[i,:])
+            pFitness[i] = fitness
     
             if(pBestScore[i]>fitness):
                 pBestScore[i]=fitness
@@ -106,5 +108,5 @@ def PSO(objf, dim, iters, pos, Vmax = 6, wMax = 0.9, wMin = 0.2, c1=2, c2 = 2, f
     s.executionTime=timerEnd-timerStart
     s.convergence=list(convergence_curve)
     s.pop = list(pos)
-    s.fitness = pBestScore
+    s.fitness = pFitness
     return s
